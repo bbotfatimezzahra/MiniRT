@@ -19,28 +19,25 @@ void	li_create(char *str, t_mini *rt)
 	int	length;
 
 	printf("light\n");
-	if (!str)
-	{
-		light.count = 0;
-		light.type = 1;
-		light.position = tu_create(-10, 10, -10, 1);
-		light.intensity = tu_create(1,1,1,2);
-	}
-	else if (rt->scene.light.count == 1)
-		return ;
-	else
+	if (!rt->scene.light)
 	{
 		infos = ft_split(str, ' ', &length);
 		if (length != 4)
 		{
 			free_double(infos);
 			free(str);
-			terminate("Incorrect scene file\n", rt);
+			terminate("incorrect scene file\n", rt);
 		}
-		light.type = 1;
-		light.position = tu_parse(infos[1], POINT);
-		light.intensity = tu_scale(tu_parse(infos[3], 2), ft_atod(infos[2]));
-		light.count = rt->scene.light.count + 1;
+		light = ft_calloc(sizeof(t_light));
+		if (!light)
+		{
+			free_double(infos);
+			free(str);
+			terminate("incorrect scene file\n", rt);
+		}
+		light->position = tu_parse(infos[1], POINT);
+		light->intensity = tu_scale(tu_parse(infos[3], 2), ft_atod(infos[2]));
+		light->count = 1;
 		free_double(infos);
 	}
 	rt->scene.light = light;

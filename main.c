@@ -76,7 +76,11 @@ t_mini	init_mini(void)
 	rt.endian = 0;
 	rt.width = DIS_WIDTH;
 	rt.length = DIS_LENGTH;
-	li_create(NULL, &rt);
+	rt.scene.light = NULL;
+	rt.scene.objs = NULL;
+	rt.scene.objnum = 0;
+	rt.scene.camera = NULL;
+	rt.scene.ambient = NULL;
 /*	rt.scale = 10;
 	rt->z_divisor[0] = INT_MIN;
 	rt->z_divisor[1] = INT_MAX;
@@ -96,7 +100,7 @@ int	main(int argc, char **argv)
 	rt = init_mini();
 	if (argc != 2)
 		terminate(ERR_USAGE, &rt);
-	rt = parse(argv[1], rt);
+	parse(argv[1], &rt);
 	printf("main\n");
 	print_tuple(rt.scene.light.position);
 	print_tuple(rt.scene.light.intensity);

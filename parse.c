@@ -44,59 +44,88 @@ t_tuple	tu_parse(char *str, int type)
 	
 void	create_scene(char *str, t_mini *rt)
 {
+	char	**lines;
+	int	num;
+
 	if (!check_str(str))
 	{
 		free(str);
 		terminate("Scene file check error", rt);
 	}
-//	if (!ft_strncmp(str, "A", 1))
-//		al_create(str, rt);
-	if (!ft_strncmp(str, "C", 1))
-		ca_create(str, rt);
-	else if (!ft_strncmp(str, "L", 1))
-		li_create(str, rt);
-	else if (!ft_strncmp(str, "sp", 2))
-		sp_create(str, rt);
-	else if (!ft_strncmp(str, "cy", 2))
-		cy_create(str, rt);
-	else if (!ft_strncmp(str, "pl", 2))
-		pl_create(str, rt);
-	else if (!ft_strncmp(str, "\n", 1))
-		return ;
-	else
+	lines = ft_split(str, '\n', &num);
+	if (!lines)
 	{
 		free(str);
-		terminate("Scene file elements error",rt);
+		terminate(ERR_MALLOC, rt);
 	}
+	rt->scene.objs = ft_calloc(sizeof(t_object *) * num);
+	if (!rt->scene.objs)
+	{
+		free(str);
+		terminate(ERR_MALLOC, rt);
+	}
+	i = 0;
+	while (i < num)
+	{
+		//if (!ft_strncmp(lines[i], "A", 1))
+		//	al_create(lines[i], rt);
+		if (!ft_strncmp(lines[i], "C", 1))
+			ca_create(lines[i], rt);
+		else if (!ft_strncmp(lines[i], "L", 1))
+			li_create(lines[i], rt);
+		else if (!ft_strncmp(lines[i], "sp", 2))
+			sp_create(lines[i], rt);
+		else if (!ft_strncmp(lines[i], "cy", 2))
+			cy_create(lines[i], rt);
+		else if (!ft_strncmp(lines[i], "pl", 2))
+			pl_create(lines[i], rt);
+		else if (!ft_strncmp(lines[i], "\n", 1))
+			return ;
+		else
+		{
+			free(str);
+			free_double(lines);
+			terminate("Scene file elements error",rt);
+		}
+		i++;
+	}
+	free(str);
+	free_double(lines);
 	print_tuple(rt->scene.light.position);
 	print_tuple(rt->scene.light.intensity);
 	printf("count : %d \n",rt->scene.light.count);
 
 }
 
-t_mini	parse(char *file, t_mini rt)
+void	parse(char *file, t_mini *rt)
 {
 	char	*str;
+	char	*scene;
 	int		fd;
 
 	str = ft_strchr(file, '.', 1);
 	if (!str || ft_strncmp(str, ".rt", 4))
-		terminate(ERR_USAGE, &rt);
+		terminate(ERR_USAGE, rt);
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
-		terminate("Open failure", &rt);
+		terminate("Open failure", rt);
 	str = get_next_line(fd);
 	if (!str)
 	{
 		close(fd);
-		terminate("Empty scene file", &rt);
+		terminate("Empty scene file", rt);
 	}
+	scene = NULL;
 	while (str)
 	{
-		create_scene(str, &rt);
-		free(str);
+		scene = ft_strjoin(scene, str);
+		if (!scene)
+		{
+			close(fd);
+			terminate(ERR_MALOC, rt);
+		}
 		str = get_next_line(fd);
 	}
 	close(fd);
-	return (rt);
+	create_scene(scene, rt);
 }
