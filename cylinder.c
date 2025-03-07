@@ -1,20 +1,61 @@
 #include "minirt.h"
 
-void	cy_create(char *str, t_mini *rt)
+t_object	*cy_create(t_mini *rt)
 {
-	t_cylinder	cy;
+	t_object	*obj;
+	t_cylinder	*cy;
 
 	printf("Cyllinder\n");
-	(void)str;
-	(void)rt;
-	cy.id = 1;
-	cy.radius = 1;
-	cy.origin = tu_create(0, 0, 0, POINT);
-	cy.miny = -DIS_LENGTH;
-	cy.maxy = DIS_LENGTH;
-	cy.cap = 0;
-	cy.material = m_create(tu_create(1,1,1,2));
-	cy.transform = ma_identity(4);
-	(void)cy;
+	obj = ft_calloc(1, sizeof(t_object));
+	if (!obj)
+		terminate(ERR_MALLOC, rt);
+	cy = ft_calloc(1, sizeof(t_cylinder));
+	if (!cy)
+		terminate(ERR_MALLOC, rt);
+	cy->radius = 1;
+	cy->origin = tu_create(0, 0, 0, POINT);
+	cy->miny = -1;
+	cy->maxy = 1;
+	cy->cap = 0;
+	obj->type = CY;
+	obj->material = m_create(tu_create(1,1,1,2));
+	obj->transform = ma_identity(4);
+	obj->obj = cy;
+	return(obj);
 }
 
+void	cy_parse(char *str, t_mini *rt)
+{
+	t_object	*obj;
+	char	**infos;
+	int	length;
+	double	a;
+
+	printf("Cylinder\n");
+	infos = ft_split(str, ' ', &length);
+	if (length != 6)
+	{
+		free_double(infos);
+		free(str);
+		terminate("Incorrect scene file\n", rt);
+	}
+	obj = cy_create(rt);
+	a = ft_atod(infos[3]) / 2;
+	obj->transform = ma_translate(tu_parse(infos[1], 1, rt));
+	obj->transform = ma_multiply(obj->transform,
+			ma_scale(tu_create(a, ft_atod(infos[4]), a, 1)));
+//	obj->transform = ma_multiply(obj->transform,
+//			ma_rodrigues(tu_parse(infos[2], 0)));
+	obj->material = m_create(tu_parse(infos[5], 2, rt));
+	obj->id = rt->scene.count;
+	free_double(infos);
+	rt->scene.objs[rt->scene.count] = obj;
+	rt->scene.count++;
+}
+/*
+t_matrix	ma_rodrigues(t_tuple tuple)
+{
+	t_matrix	rot;
+	return (rot);
+}
+*/

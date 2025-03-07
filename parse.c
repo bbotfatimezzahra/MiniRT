@@ -15,37 +15,84 @@
 int	check_str(char *str)
 {
 	int	i;
+	int	a;
 	char	c;
 
 	i = 0;
+	a = 0;
 	while (str[i])
 	{
 		c = str[i];
 		if (((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
-				&& i < 2)
-			i++;
+				&& a < 2)
+			a++;
+		else if (c == '\n')
+			a = 0;
 		else if ((c < '0' || c > '9') && (c < 9 || c > 13)
 				&& c != 32 && c != ',' && c != '.' && c != '-')
-			return (0);
+			return (printf("%c \n", c),0);
 		i++;
 	}
 	return (1);
 }
 
-t_tuple	tu_parse(char *str, int type)
+void	check_vector(t_tuple tuple, int type, t_mini *rt)
+{
+	double	min;
+	double	max;
+
+	if (type == 0)
+	{
+		min = -1;
+		max = 1;
+	}
+	else if (type == 2)
+	{
+		min = 0;
+		max = 255;
+	}
+	else
+		return;
+	if (tuple.x < min || tuple.x > max
+		|| tuple.y < min || tuple.y > max
+		|| tuple.z < min || tuple.z > max)
+	{
+		print_tuple(tuple);
+		terminate("Incorrect scene file 1", rt);
+	}
+}
+
+double	check_ratio(double value, int type, t_mini *rt)
+{
+	if (type == 2)
+		return (value);
+	if (value < 0 || (type  == 0 && value > 1)
+			|| (type == 1 && value > 180))
+		terminate("Incorrect scene file 2", rt);
+	return (value);
+}
+
+t_tuple	tu_parse(char *str, int type, t_mini *rt)
 {
 	double	coord[3];
+	t_tuple	tuple;
 
 	coord[0] = ft_atod(str);
 	coord[1] = ft_atod(&ft_strchr(str, ',', 1)[1]);
 	coord[2] = ft_atod(&ft_strchr(str, ',', 2)[1]);
-	return (tu_create(coord[0], coord[1], coord[2], type));
+	tuple = tu_create(coord[0], coord[1], coord[2], type);
+	check_vector(tuple, type, rt);
+	if (type == 2)
+		tuple = tu_create(tuple.x/255, tuple.y/255, 
+				tuple.z/255, 2);
+	return (tuple);
 }
 	
 void	create_scene(char *str, t_mini *rt)
 {
 	char	**lines;
 	int	num;
+	int	i;
 
 	if (!check_str(str))
 	{
@@ -58,43 +105,44 @@ void	create_scene(char *str, t_mini *rt)
 		free(str);
 		terminate(ERR_MALLOC, rt);
 	}
-	rt->scene.objs = ft_calloc(sizeof(t_object *) * num);
+	rt->scene.objs = ft_calloc(num, sizeof(t_object *));
 	if (!rt->scene.objs)
 	{
 		free(str);
 		terminate(ERR_MALLOC, rt);
 	}
 	i = 0;
+	printf("num %d \n", num);
 	while (i < num)
 	{
-		//if (!ft_strncmp(lines[i], "A", 1))
-		//	al_create(lines[i], rt);
-		if (!ft_strncmp(lines[i], "C", 1))
+		if (!ft_strncmp(lines[i], "A", 1))
+			am_create(lines[i], rt);
+		else if (!ft_strncmp(lines[i], "C", 1))
 			ca_create(lines[i], rt);
 		else if (!ft_strncmp(lines[i], "L", 1))
 			li_create(lines[i], rt);
 		else if (!ft_strncmp(lines[i], "sp", 2))
-			sp_create(lines[i], rt);
+			sp_parse(lines[i], rt);
 		else if (!ft_strncmp(lines[i], "cy", 2))
-			cy_create(lines[i], rt);
-		else if (!ft_strncmp(lines[i], "pl", 2))
-			pl_create(lines[i], rt);
+			cy_parse(lines[i], rt);
+	//	else if (!ft_strncmp(lines[i], "pl", 2))
+	//		pl_parse(lines[i], rt);
 		else if (!ft_strncmp(lines[i], "\n", 1))
 			return ;
 		else
 		{
 			free(str);
 			free_double(lines);
-			terminate("Scene file elements error",rt);
+			printf(" i %d \n", i);
+			printf("====== %s \n", lines[i]);
+			terminate("Scene file elements error 1",rt);
 		}
 		i++;
 	}
 	free(str);
 	free_double(lines);
-	print_tuple(rt->scene.light.position);
-	print_tuple(rt->scene.light.intensity);
-	printf("count : %d \n",rt->scene.light.count);
-
+	if (!rt->scene.light || !rt->scene.ambient)
+			terminate("Scene file elements error 2",rt);
 }
 
 void	parse(char *file, t_mini *rt)
@@ -122,7 +170,7 @@ void	parse(char *file, t_mini *rt)
 		if (!scene)
 		{
 			close(fd);
-			terminate(ERR_MALOC, rt);
+			terminate(ERR_MALLOC, rt);
 		}
 		str = get_next_line(fd);
 	}

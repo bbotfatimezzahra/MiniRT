@@ -54,12 +54,11 @@ double	ft_atod(const char *str)
 	}
 	while (str[i] && (str[i] >= '0' && str[i] <= '9'))
 	{
-		result = (result * 10) + (str[i] - '0');
+		result = (result * 10) + (str[i++] - '0');
 		if ((result > DBL_MAX) && sign == 1)
 			return (0);
 		else if ((result * -1 > DBL_MIN) && sign == -1)
 			return (0);
-		i++;
 	}
 	if (str[i] == '.')
 		result += ft_atoi(&str[i + 1]);

@@ -26,21 +26,54 @@ void	li_create(char *str, t_mini *rt)
 		{
 			free_double(infos);
 			free(str);
-			terminate("incorrect scene file\n", rt);
+			printf("length %d\n",length);
+			terminate("incorrect scene file light\n", rt);
 		}
-		light = ft_calloc(sizeof(t_light));
+		light = ft_calloc(1, sizeof(t_light));
 		if (!light)
 		{
 			free_double(infos);
 			free(str);
-			terminate("incorrect scene file\n", rt);
+			terminate(ERR_MALLOC, rt);
 		}
-		light->position = tu_parse(infos[1], POINT);
-		light->intensity = tu_scale(tu_parse(infos[3], 2), ft_atod(infos[2]));
+		light->position = tu_parse(infos[1], POINT, rt);
+		light->intensity = tu_scale(tu_parse(infos[3], 2, rt),
+					check_ratio(ft_atod(infos[2]), 0, rt));
 		light->count = 1;
 		free_double(infos);
+		rt->scene.light = light;
 	}
-	rt->scene.light = light;
+}
+
+void	am_create(char *str, t_mini *rt)
+{
+	t_color	*ambient;
+	char	**infos;
+	int	length;
+
+	printf("ambient\n");
+	if (!rt->scene.ambient)
+	{
+		infos = ft_split(str, ' ', &length);
+		if (length != 3)
+		{
+			free_double(infos);
+			free(str);
+			printf("length %d\n",length);
+			terminate("incorrect scene file ambient\n", rt);
+		}
+		ambient = ft_calloc(1, sizeof(t_tuple));
+		if (!ambient)
+		{
+			free_double(infos);
+			free(str);
+			terminate(ERR_MALLOC, rt);
+		}
+		*ambient = tu_scale(tu_parse(infos[2], 2, rt), 
+				check_ratio(ft_atod(infos[1]), 0, rt));
+		free_double(infos);
+		rt->scene.ambient = ambient;
+	}
 }
 
 t_color	lighting(t_material material, t_light light, t_point point, t_vector eyev, t_vector normalv)

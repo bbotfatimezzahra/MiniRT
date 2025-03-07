@@ -39,6 +39,44 @@ void	print_ray(t_ray r)
 	printf("Dir :");
 	print_tuple(r.direction);
 }
+
+void	print_objs(t_mini rt)
+{
+	int	i;
+	t_material	material;
+
+	printf("**************************************************\n");
+	printf("Scene :\n");
+	printf("Light : \n count %d \n position :", rt.scene.light->count);
+	print_tuple(rt.scene.light->position);
+	printf("intensity :");
+	print_tuple(rt.scene.light->intensity);
+	printf("Ambient :");
+	print_tuple(*rt.scene.ambient);
+	printf("Objects : count %d \n", rt.scene.count);
+	i = 0;
+	while (i < rt.scene.count)
+	{
+		printf("id : %d\n",rt.scene.objs[i]->id);
+		printf("type : ");
+		if (rt.scene.objs[i]->type == SP)
+			printf("SP\n");
+		else if (rt.scene.objs[i]->type == CY)
+			printf("CY\n");
+		else
+			printf("ELSE\n");
+		printf("obj : %p\n", rt.scene.objs[i]->obj);
+		printf("material : color ");
+		material = rt.scene.objs[i]->material;
+		print_tuple(material.color);
+		printf("transform : ");
+		print_matrix(rt.scene.objs[i]->transform);
+		printf("=========================\n");
+		i++;
+	}
+	printf("**************************************************\n");
+}
+
 /*
 int	main(int argc, char **argv)
 {
@@ -78,7 +116,7 @@ t_mini	init_mini(void)
 	rt.length = DIS_LENGTH;
 	rt.scene.light = NULL;
 	rt.scene.objs = NULL;
-	rt.scene.objnum = 0;
+	rt.scene.count = 0;
 	rt.scene.camera = NULL;
 	rt.scene.ambient = NULL;
 /*	rt.scale = 10;
@@ -101,10 +139,7 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		terminate(ERR_USAGE, &rt);
 	parse(argv[1], &rt);
-	printf("main\n");
-	print_tuple(rt.scene.light.position);
-	print_tuple(rt.scene.light.intensity);
-	printf("count : %d \n",rt.scene.light.count);
+	print_objs(rt);
 /*
 	start_display(&rt);
 	t_matrix	a;

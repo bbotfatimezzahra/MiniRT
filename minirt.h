@@ -33,8 +33,8 @@
 # define POINT 1
 # define COLOR 2
 # define SP 0
-# define CY 0
-# define PL 0
+# define CY 1
+# define PL 2
 # define EPS 0.00001
 # define PI 3.14
 
@@ -98,8 +98,9 @@ typedef struct s_cylinder
 	double	maxy;
 }	t_cylinder;
 
-typedef	struct s_object;
+typedef	struct s_object
 {
+	int	id;
 	int	type;
 	void	*obj;
 	t_material	material;
@@ -126,11 +127,15 @@ typedef struct s_light
 	t_point	position;
 }	t_light;
 
+typedef struct s_camera
+{
+}	t_camera;
+
 typedef struct s_scene
 {
 	t_light	*light;
 	t_object	**objs;
-	int	objnum;
+	int	count;
 	t_camera	*camera;
 	t_color	*ambient;	
 }	t_scene;
@@ -181,32 +186,36 @@ t_matrix	ma_shear(double pro[6]);
 t_ray	ra_create(t_point origin, t_vector direction);
 t_point	ra_position(t_ray ray, double t);
 t_ray	ra_transform(t_ray ray, t_matrix matrix);
-void	sp_create(char *str, t_mini *rt);
+void	sp_parse(char *str, t_mini *rt);
+t_object	*sp_create(t_mini *rt);
 t_sphere	sp_transform(t_sphere sp, t_matrix matrix);
-t_intersections	sp_intersect(t_sphere sp, t_ray ray, t_intersections inter);
+t_intersections	sp_intersect(t_object *sp, t_ray ray, t_intersections inter);
 t_intersect	hits(t_intersections inter);
 t_vector	ve_camera(t_ray ray);
 t_vector	ve_light(t_point o_pos, t_point l_pos);
-t_vector	ve_sp_normal(t_sphere sp, t_point w_point);
-t_vector	ve_cy_normal(t_cylinder cy, t_point w_point);
+t_vector	ve_sp_normal(t_object *sp, t_tuple w_point);
+t_vector	ve_cy_normal(t_object *cy, t_point w_point);
 t_vector	ve_reflection(t_point in, t_vector normal);
 void	li_create(char *str, t_mini *rt);
+void	am_create(char *str, t_mini *rt);
 t_material	m_create(t_color color);
 t_color	lighting(t_material material, t_light light, t_point point, t_vector eyev, t_vector normalv);
 t_scene	w_create(t_light light[10], t_sphere sp[10]);
 t_intersections	w_intersect(t_scene scene, t_ray ray);
-t_intersections	cy_intersect(t_cylinder cy, t_ray ray, t_intersections inter);
-void	cy_create(char *str, t_mini *rt);
+t_intersections	cy_intersect(t_object *cy, t_ray ray, t_intersections inter);
+t_object	*cy_create(t_mini *rt);
+void	cy_parse(char *str, t_mini *rt);
 double	ft_atod(const char *str);
 void	parse(char *file, t_mini *rt);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
 void	ca_create(char *str, t_mini *rt);
-void	pl_create(char *str, t_mini *rt);
-t_tuple	tu_parse(char *str, int type);
+void	pl_parse(char *str, t_mini *rt);
+t_tuple	tu_parse(char *str, int type, t_mini *rt);
 char	**ft_split(char const *s, char c, int *length);
 void	free_double(char **ptr);
 void	*ft_calloc(size_t count, size_t size);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
+double	check_ratio(double value, int type, t_mini *rt);
 
 void	terminate(char *error, t_mini *rt);
 

@@ -19,7 +19,7 @@ t_scene	s_create(t_light light, t_sphere sp[10])
 	}
 	return (world);
 }
-*/
+
 t_intersections	w_intersect(t_scene world, t_ray ray)
 {
 	t_intersections	inter;
@@ -33,4 +33,4 @@ t_intersections	w_intersect(t_scene world, t_ray ray)
 		i++;
 	}
 	return (inter);
-}
+}*/

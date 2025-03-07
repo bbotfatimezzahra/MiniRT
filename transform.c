@@ -20,25 +20,25 @@ t_matrix	ma_identity(int size)
 	return (r);
 }
 
-t_matrix	ma_translate(double x, double y, double z)
+t_matrix	ma_translate(t_tuple tuple)
 {
 	t_matrix	r;
 
 	r = ma_identity(4);
-	r.v[0][3] = x;
-	r.v[1][3] = y;
-	r.v[2][3] = z;
+	r.v[0][3] = tuple.x;
+	r.v[1][3] = tuple.y;
+	r.v[2][3] = tuple.z;
 	return (r);
 }
 
-t_matrix	ma_scale(double x, double y, double z)
+t_matrix	ma_scale(t_tuple tuple)
 {
 	t_matrix	r;
 
 	r = ma_identity(4);
-	r.v[0][0] = x;
-	r.v[1][1] = y;
-	r.v[2][2] = z;
+	r.v[0][0] = tuple.x;
+	r.v[1][1] = tuple.y;
+	r.v[2][2] = tuple.z;
 	return (r);
 }
 
