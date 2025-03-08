@@ -15,7 +15,7 @@ t_object	*sp_create(t_mini *rt)
 	sphere->radius = 1;
 	obj->material = m_create(tu_create(1, 1, 1, 2));
 	obj->transform = ma_identity(4);
-	obj->type = SP;
+	obj->type = SPHERE;
 	obj->obj = sphere;
 	return (obj);
 }

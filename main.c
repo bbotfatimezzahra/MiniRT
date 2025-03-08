@@ -59,10 +59,10 @@ void	print_objs(t_mini rt)
 	{
 		printf("id : %d\n",rt.scene.objs[i]->id);
 		printf("type : ");
-		if (rt.scene.objs[i]->type == SP)
-			printf("SP\n");
-		else if (rt.scene.objs[i]->type == CY)
-			printf("CY\n");
+		if (rt.scene.objs[i]->type == SPHERE)
+			printf("SPHERE\n");
+		else if (rt.scene.objs[i]->type == CYLINDER)
+			printf("CYLINDER\n");
 		else
 			printf("ELSE\n");
 		printf("obj : %p\n", rt.scene.objs[i]->obj);
@@ -139,7 +139,8 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		terminate(ERR_USAGE, &rt);
 	parse(argv[1], &rt);
-	print_objs(rt);
+  render_a_scene(&rt);
+	/*print_objs(rt);*/
 /*
 	start_display(&rt);
 	t_matrix	a;

@@ -17,7 +17,7 @@ t_object	*cy_create(t_mini *rt)
 	cy->miny = -1;
 	cy->maxy = 1;
 	cy->cap = 0;
-	obj->type = CY;
+	obj->type = CYLINDER;
 	obj->material = m_create(tu_create(1,1,1,2));
 	obj->transform = ma_identity(4);
 	obj->obj = cy;

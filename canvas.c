@@ -1,5 +1,25 @@
 #include "minirt.h"
 
+unsigned long rgb_to_hex(t_color c)
+{
+    int red = round(c.x * 255);
+    int green = round(c.y * 255);
+    int blue = round(c.z * 255);
+    red = (red < 0) ? 0 : (red > 255) ? 255 : red;
+    green = (green < 0) ? 0 : (green > 255) ? 255 : green;
+    blue = (blue < 0) ? 0 : (blue > 255) ? 255 : blue;
+
+    return ((unsigned long)(red & 0xff) << 16) | ((unsigned long)(green & 0xff) << 8) | (blue & 0xff);
+}
+
+/*void  put_pixel(int x, int y, int color, t_mlx mlx)*/
+/*{*/
+/*  int pixel_offset;*/
+/**/
+/*  pixel_offset = (y * mlx.img.size_line) + (x * (mlx.img.bpp / 8));*/
+/* *(int *)(mlx.img.data + pixel_offset) = color; */
+/*}*/
+
 void	put_pixel(t_mini *rt, int x, int y, int color)
 {
 	char	*dst;
