@@ -1,5 +1,28 @@
 #include "minirt.h"
 
+t_matrix ma_tu_fill(t_tuple r1, t_tuple r2, t_tuple r3, t_tuple r4)
+{
+  t_matrix new;
+
+  new.v[0][0] = r1.x;
+  new.v[0][1] = r1.y;
+  new.v[0][2] = r1.z;
+  new.v[0][3] = r1.w;
+  new.v[1][0] = r2.x;
+  new.v[1][1] = r2.y;
+  new.v[1][2] = r2.z;
+  new.v[1][3] = r2.w;
+  new.v[2][0] = r3.x;
+  new.v[2][1] = r3.y;
+  new.v[2][2] = r3.z;
+  new.v[2][3] = r3.w;
+  new.v[3][0] = r4.x;
+  new.v[3][1] = r4.y;
+  new.v[3][2] = r4.z;
+  new.v[3][3] = r4.w;
+  return (new);
+}
+
 t_matrix	ma_create(int rows, int cols, double v[4][4])
 {
 	t_matrix	r;

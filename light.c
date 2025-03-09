@@ -76,64 +76,51 @@ void	am_create(char *str, t_mini *rt)
 	}
 }
 
-t_color	lighting(t_material material, t_light light, t_point point, t_vector eyev, t_vector normalv)
+t_color light_calc(t_vector lightv, t_compute cmp, t_color ef_color, t_light l)
 {
-	t_color	ef_color;
-	t_vector	lightv;
-	t_vector	reflectv;
-	t_color	ambient;
-	t_color	diffuse;
+  t_color	diffuse;
 	t_color	specular;
-	double	li_dot_nor;
-	double	re_dot_eye;
 	double	factor;
-
-	print_tuple(material.color);
-	print_tuple(light.intensity);
-	ef_color = tu_multiply(material.color, light.intensity);
-//	printf("ef_color\n");
-	//print_tuple(ef_color);
-	lightv = tu_normalize(tu_subtract(light.position, point));
-	//printf("lightv\n");
-	//print_tuple(lightv);
-	ambient = tu_scale(ef_color, material.ambient);
-	//printf("ambient\n");
-	//print_tuple(ambient);
-	li_dot_nor = tu_dot(lightv, normalv);
-	//printf("li_dot_nor = %f\n",li_dot_nor);
+	double	re_dot_eye;
+  double	li_dot_nor;
+  
+  li_dot_nor = tu_dot(lightv, cmp.normalv);
 	if (li_dot_nor < 0)
 	{
-		diffuse = tu_create(0, 0, 0, 2);
-		//printf("diffuse\n");
-		//print_tuple(diffuse);
-		specular = tu_create(0, 0, 0, 2);
-		//printf("specular\n");
-		//print_tuple(specular);
+		diffuse = tu_create(0, 0, 0, COLOR);
+		specular = tu_create(0, 0, 0, COLOR);
 	}
 	else
 	{
-		diffuse = tu_scale(ef_color, material.diffuse * li_dot_nor);
-		//printf("diffuse\n");
-		//print_tuple(diffuse);
-		reflectv = ve_reflection(tu_scale(lightv, -1), normalv);
-		//printf("reflectv\n");
-		//print_tuple(reflectv);
-		re_dot_eye = tu_dot(reflectv, eyev);
-		//printf("re_dot_eye = %f\n",re_dot_eye);
+		diffuse = tu_scale(ef_color, cmp.obj->material.diffuse * li_dot_nor);
+		re_dot_eye = tu_dot(ve_reflection(tu_scale(lightv, -1), cmp.normalv), cmp.eyev);
 		if (re_dot_eye <= 0)
-		{
-			specular = tu_create(0, 0, 0, 2);
-			//printf("specular\n");
-			//print_tuple(specular);
-		}
+			specular = tu_create(0, 0, 0, COLOR);
 		else
 		{
-			factor = pow(re_dot_eye, material.shininess);
-			//printf("factor = %f\n",factor);
-			specular = tu_scale(light.intensity, material.specular * factor);
-			//printf("specular\n");
-		//	print_tuple(specular);
+			factor = pow(re_dot_eye, cmp.obj->material.shininess);
+			specular = tu_scale(l.intensity, cmp.obj->material.specular * factor);
 		}
 	}
-	return (tu_add(tu_add(ambient, diffuse), specular));
+  return (tu_add(diffuse, specular));
 }
+
+t_color	lighting(t_compute cmp, t_light light, bool shade)
+{
+	t_color	ef_color;
+	t_vector	lightv;
+	t_color	ambient;
+  t_color color;
+
+  color = cmp.obj->material.color;
+  if (cmp.obj->material.pattern.enable == true)
+    color = pattern_obj(cmp.obj->material.pattern, *cmp.obj, cmp.point);
+	ef_color = tu_multiply(color, light.intensity);
+	ambient = tu_scale(ef_color, cmp.obj->material.ambient);
+  if (shade)
+    return (ambient);
+	lightv = tu_normalize(tu_subtract(light.position, cmp.point));
+	return (tu_add(light_calc(lightv, cmp, ef_color, light), ambient));
+}
+
+

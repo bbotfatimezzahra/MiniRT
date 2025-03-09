@@ -55,12 +55,10 @@ void	print_objs(t_mini rt)
 	{
 		printf("id : %d\n",rt.scene.objs[i]->id);
 		printf("type : ");
-		if (rt.scene.objs[i]->type == SP)
-			printf("SP\n");
-		else if (rt.scene.objs[i]->type == CY)
-			printf("CY\n");
-		else if (rt.scene.objs[i]->type == PL)
-			printf("PL\n");
+		if (rt.scene.objs[i]->type == SPHERE)
+			printf("SPHERE\n");
+		else if (rt.scene.objs[i]->type == CYLINDER)
+			printf("CYLINDER\n");
 		else
 			printf("ELSE\n");
 		printf("obj : %p\n", rt.scene.objs[i]->obj);

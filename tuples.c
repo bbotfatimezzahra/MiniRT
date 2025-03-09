@@ -59,3 +59,13 @@ t_tuple	tu_normalize(t_tuple t1)
 	norm.w = t1.w / magn;
 	return (norm);
 }
+
+
+t_tuple tu_negate(t_tuple t)
+{
+  return (tu_create(-t.x,
+                    -t.y,
+                    -t.z,
+                    -t.w));
+}
+
