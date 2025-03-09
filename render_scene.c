@@ -1,6 +1,6 @@
 #include "minirt.h"
 
-t_matrix view_transformation(t_point from, t_vector orientation, t_vector up)
+t_matrix view_transform(t_point from, t_vector orientation, t_vector up)
 {
     t_vector forward;
     t_vector left;

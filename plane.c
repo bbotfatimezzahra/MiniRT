@@ -21,7 +21,7 @@ t_object	*pl_create(t_mini *rt)
 		terminate(ERR_MALLOC, rt);
 	obj->material = m_create(tu_create(1, 1, 1, 2));
 	obj->transform = ma_identity(4);
-	obj->type = PL;
+	obj->type = PLANE;
 	obj->obj = NULL;
 	return (obj);
 }

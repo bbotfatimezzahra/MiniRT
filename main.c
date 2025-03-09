@@ -59,6 +59,8 @@ void	print_objs(t_mini rt)
 			printf("SPHERE\n");
 		else if (rt.scene.objs[i]->type == CYLINDER)
 			printf("CYLINDER\n");
+		else if (rt.scene.objs[i]->type == PLANE)
+			printf("PLANE\n");
 		else
 			printf("ELSE\n");
 		printf("obj : %p\n", rt.scene.objs[i]->obj);

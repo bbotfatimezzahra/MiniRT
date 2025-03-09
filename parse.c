@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-void	check_str(char *str)
+void	check_str(char *str, t_mini *rt)
 {
 	int	i;
 	int	a;
@@ -97,7 +97,7 @@ void	create_scene(char *str, t_mini *rt)
 	int	num;
 	int	i;
 
-	check_str(str);
+	check_str(str, rt);
 	lines = ft_split(str, '\n', &num);
 	if (!lines)
 	{
