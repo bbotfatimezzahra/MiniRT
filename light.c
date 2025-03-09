@@ -21,27 +21,19 @@ void	li_create(char *str, t_mini *rt)
 	printf("light\n");
 	if (!rt->scene.light)
 	{
-		infos = ft_split(str, ' ', &length);
+		rt->parse_infos = ft_split(str, ' ', &length);
+		infos = rt->parse_infos;
 		if (length != 4)
-		{
-			free_double(infos);
-			free(str);
-			printf("length %d\n",length);
 			terminate("incorrect scene file light\n", rt);
-		}
 		light = ft_calloc(1, sizeof(t_light));
 		if (!light)
-		{
-			free_double(infos);
-			free(str);
 			terminate(ERR_MALLOC, rt);
-		}
 		light->position = tu_parse(infos[1], POINT, rt);
 		light->intensity = tu_scale(tu_parse(infos[3], 2, rt),
 					check_ratio(ft_atod(infos[2]), 0, rt));
 		light->count = 1;
-		free_double(infos);
 		rt->scene.light = light;
+		free_double(rt->parse_infos);
 	}
 }
 
@@ -54,37 +46,29 @@ void	am_create(char *str, t_mini *rt)
 	printf("ambient\n");
 	if (!rt->scene.ambient)
 	{
-		infos = ft_split(str, ' ', &length);
+		rt->parse_infos = ft_split(str, ' ', &length);
+		infos = rt->parse_infos;
 		if (length != 3)
-		{
-			free_double(infos);
-			free(str);
-			printf("length %d\n",length);
 			terminate("incorrect scene file ambient\n", rt);
-		}
 		ambient = ft_calloc(1, sizeof(t_tuple));
 		if (!ambient)
-		{
-			free_double(infos);
-			free(str);
 			terminate(ERR_MALLOC, rt);
-		}
 		*ambient = tu_scale(tu_parse(infos[2], 2, rt), 
 				check_ratio(ft_atod(infos[1]), 0, rt));
-		free_double(infos);
 		rt->scene.ambient = ambient;
+		free_double(rt->parse_infos);
 	}
 }
 
 t_color light_calc(t_vector lightv, t_compute cmp, t_color ef_color, t_light l)
 {
-  t_color	diffuse;
+	t_color	diffuse;
 	t_color	specular;
 	double	factor;
 	double	re_dot_eye;
-  double	li_dot_nor;
-  
-  li_dot_nor = tu_dot(lightv, cmp.normalv);
+	double	li_dot_nor;
+
+	li_dot_nor = tu_dot(lightv, cmp.normalv);
 	if (li_dot_nor < 0)
 	{
 		diffuse = tu_create(0, 0, 0, COLOR);
@@ -102,7 +86,7 @@ t_color light_calc(t_vector lightv, t_compute cmp, t_color ef_color, t_light l)
 			specular = tu_scale(l.intensity, cmp.obj->material.specular * factor);
 		}
 	}
-  return (tu_add(diffuse, specular));
+	return (tu_add(diffuse, specular));
 }
 
 t_color	lighting(t_compute cmp, t_light light, bool shade)

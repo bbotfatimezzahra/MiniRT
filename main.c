@@ -92,6 +92,9 @@ t_mini	init_mini(void)
 	rt.scene.count = 0;
 	rt.scene.camera = NULL;
 	rt.scene.ambient = NULL;
+	rt.parse_str = NULL;
+	rt.parse_elems = NULL;
+	rt.parse_infos = NULL;
 	return (rt);
 }
 
@@ -102,8 +105,8 @@ int	main(int argc, char **argv)
 	rt = init_mini();
 	if (argc != 2)
 		terminate(ERR_USAGE, &rt);
-	parse(argv[1], &rt);
+	parse_file(argv[1], &rt);
 	print_objs(rt);
-  start_display(&rt);
+	start_display(&rt);
 	return (0);
 }
