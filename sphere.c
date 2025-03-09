@@ -28,13 +28,10 @@ void	sp_parse(char *str, t_mini *rt)
 	double	a;
 
 	printf("Sphere\n");
-	infos = ft_split(str, ' ', &length);
+	rt->parse_infos = ft_split(str, ' ', &length);
+	infos = rt->parse_infos;
 	if (length != 4)
-	{
-		free_double(infos);
-		free(str);
 		terminate("Incorrect scene file\n", rt);
-	}
 	obj = sp_create(rt);
 	a = ft_atod(infos[2]) / 2;
 	obj->transform = ma_translate(tu_parse(infos[1], 1, rt));
@@ -42,9 +39,9 @@ void	sp_parse(char *str, t_mini *rt)
 			ma_scale(tu_create(a, a, a, 1)));
 	obj->material = m_create(tu_parse(infos[3], 2, rt));
 	obj->id = rt->scene.count;
-	free_double(infos);
 	rt->scene.objs[rt->scene.count] = obj;
 	rt->scene.count++;
+	free_double(rt->parse_infos);
 }
 /*
 t_sphere	sp_transform(t_sphere sp, t_matrix matrix)

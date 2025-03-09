@@ -195,10 +195,9 @@ typedef struct s_mini
 	int		width;
 	int		length;
 	t_scene	scene;
-//	int		scale;
-	//int		offset[2];
-	//int		z_divisor[3];
-	//double	angle[3];
+	char	*parse_str;
+	char	**parse_elems;
+	char	**parse_infos;
 }			t_mini;
 
 
@@ -292,7 +291,7 @@ t_material	m_create(t_color color);
 t_scene	w_create(t_light light[10], t_sphere sp[10]);
 t_object	*cy_create(t_mini *rt);
 void	cy_parse(char *str, t_mini *rt);
-void	parse(char *file, t_mini *rt);
+void	parse_file(char *file, t_mini *rt);
 void	ca_create(char *str, t_mini *rt);
 void	pl_parse(char *str, t_mini *rt);
 t_tuple	tu_parse(char *str, int type, t_mini *rt);

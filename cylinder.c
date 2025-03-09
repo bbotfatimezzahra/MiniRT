@@ -32,13 +32,10 @@ void	cy_parse(char *str, t_mini *rt)
 	double	a;
 
 	printf("Cylinder\n");
-	infos = ft_split(str, ' ', &length);
+	rt->parse_infos = ft_split(str, ' ', &length);
+	infos = rt->parse_infos;
 	if (length != 6)
-	{
-		free_double(infos);
-		free(str);
 		terminate("Incorrect scene file\n", rt);
-	}
 	obj = cy_create(rt);
 	a = ft_atod(infos[3]) / 2;
 	obj->transform = ma_translate(tu_parse(infos[1], 1, rt));
@@ -48,14 +45,7 @@ void	cy_parse(char *str, t_mini *rt)
 //			ma_rodrigues(tu_parse(infos[2], 0)));
 	obj->material = m_create(tu_parse(infos[5], 2, rt));
 	obj->id = rt->scene.count;
-	free_double(infos);
 	rt->scene.objs[rt->scene.count] = obj;
 	rt->scene.count++;
+	free_double(rt->parse_infos);
 }
-/*
-t_matrix	ma_rodrigues(t_tuple tuple)
-{
-	t_matrix	rot;
-	return (rot);
-}
-*/

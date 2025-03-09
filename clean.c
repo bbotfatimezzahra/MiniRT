@@ -27,28 +27,42 @@ void	free_double(char **ptr)
 		free(ptr[i++]);
 	free(ptr);
 }
-/*
-void	free_maps(t_fdf *fdf)
+
+void	free_scene(t_mini *rt)
 {
 	int	i;
 
-	i = 0;
-	while (i < fdf->map.rows)
+	if (rt->scene.light)
+		free(rt->scene.light);
+	if (rt->scene.camera)
+		free(rt->scene.camera);
+	if (rt->scene.ambient)
+		free(rt->scene.ambient);
+	if (rt->scene.objs)
 	{
-		if (fdf->map.points[i])
-			free(fdf->map.points[i]);
-		if (fdf->map.tmps[i])
-			free(fdf->map.tmps[i]);
-		i++;
+		i = -1;
+		while (++i < rt->scene.count)
+		{
+			if (rt->scene.objs[i])
+			{
+				if (rt->scene.objs[i]->obj)
+					free(rt->scene.objs[i]->obj);
+				free(rt->scene.objs[i]);
+			}
+		}
+		free(rt->scene.objs);
 	}
-	if (fdf->map.points)
-		free(fdf->map.points);
-	if (fdf->map.tmps)
-		free(fdf->map.tmps);
 }
-*/
+
 void	terminate(char *error, t_mini *rt)
 {
+	free_scene(rt);
+	if (rt->parse_str)
+		free(rt->parse_str);
+	if (rt->parse_elems)
+		free_double(rt->parse_elems);
+	if (rt->parse_infos)
+		free_double(rt->parse_infos);
 	if (rt->img)
 		mlx_destroy_image(rt->con, rt->img);
 	if (rt->win)
