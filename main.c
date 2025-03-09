@@ -104,5 +104,6 @@ int	main(int argc, char **argv)
 		terminate(ERR_USAGE, &rt);
 	parse(argv[1], &rt);
 	print_objs(rt);
+  start_display(&rt);
 	return (0);
 }

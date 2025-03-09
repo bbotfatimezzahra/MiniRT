@@ -36,7 +36,7 @@ void	ca_create(char *str, t_mini *rt)
 			free(str);
 			terminate(ERR_MALLOC, rt);
 		}
-		*camera = set_camera(DIS_LENGTH, DIS_WIDTH,
+		*camera = set_camera(DIS_WIDTH, DIS_LENGTH,
 				check_ratio(ft_atod(infos[3]), 1, rt));
 		camera->transform = view_transform(tu_parse(infos[1], 
 				1, rt), tu_parse(infos[2], 0, rt),

@@ -60,8 +60,12 @@ t_ray ray_for_pixel(t_camera c, int px, int py)
   yoffset = (py + 0.5) * c.pixel_size;
   x_world = c.half_width - xoffset;
   y_world = c.half_hight - yoffset;
+  printf("pixel x %d y %d\n",px, py);
+  /*printf("start matrix ops 1\n");*/
   transformed_pixel = ma_tu_multiply(ma_invert(c.transform), tu_create(x_world, y_world, -1, 1));
+  /*printf("end of 1 start matrix ops 2\n");*/
   r.origin = ma_tu_multiply(ma_invert(c.transform), tu_create(0, 0, 0, 1));
+  /*printf("end matrix ops 2\n");*/
   r.direction = tu_normalize(tu_subtract(transformed_pixel, r.origin));
   return (r);
 }
@@ -75,10 +79,10 @@ void  render_a_scene(t_mini *mini)
   int reflect_recur_checker; // this variable is made to avoid recursivity in the case of two reflected obj
 
   i = 0;
-  while (i < mini->scene.camera->horizontal_size)
+  while (i < DIS_WIDTH)
   {
     j = 0;
-    while (j < mini->scene.camera->vertical_size)
+    while (j < DIS_LENGTH)
     {
       r = ray_for_pixel(*mini->scene.camera, i, j);
       reflect_recur_checker = 0;

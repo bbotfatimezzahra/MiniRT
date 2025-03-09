@@ -4,6 +4,8 @@ t_matrix ma_tu_fill(t_tuple r1, t_tuple r2, t_tuple r3, t_tuple r4)
 {
   t_matrix new;
 
+  new.rows = 4;
+  new.cols = 4;
   new.v[0][0] = r1.x;
   new.v[0][1] = r1.y;
   new.v[0][2] = r1.z;
@@ -136,6 +138,7 @@ double	ma_cofactor(t_matrix m, int row, int col)
 {
 	double	cof;
 
+  /*printf("hi\n\n\n");*/
 	cof = ma_determinant(ma_submatrix(m, row, col));
 	if ((row + col) % 2 == 1)
 		cof *= -1;
@@ -150,8 +153,8 @@ t_matrix	ma_invert(t_matrix m)
 	int	j;
 
 	det = ma_determinant(m);
-	if (!det)
-		return (printf("NOT INVERTIBLE\n"), m);
+	/*if (!det)*/
+	/*	return (m);*/
 	r = ma_create(m.rows, m.cols, NULL);
 	i = -1;
 	while (++i < m.rows)

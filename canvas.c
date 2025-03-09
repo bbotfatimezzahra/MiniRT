@@ -182,8 +182,9 @@ void	start_display(t_mini *rt)
 	if (!rt->img)
 		terminate(ERR_IMG, rt);
 	rt->addr = mlx_get_data_addr(rt->img, &rt->bpp, l_length, endian);
-	draw_background(rt);
-	fill_image(rt);
+	/*draw_background(rt);*/
+	render_a_scene(rt);
+  printf("\nDONE\n");
 	mlx_put_image_to_window(rt->con, rt->win, rt->img, 0, 0);
 	mlx_hook(rt->win, 2, 1L << 0, key_hook, rt);
 	mlx_hook(rt->win, 17, 1L << 2, destroy, rt);
