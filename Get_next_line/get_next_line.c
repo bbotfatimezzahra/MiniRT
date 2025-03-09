@@ -106,7 +106,7 @@ char	*get_next_line(int fd)
 	{
 		i = fill_buffer(fd, &buffer, &line);
 		if (i == -1)
-			return (NULL);
+			return (close(fd), NULL);
 		if (buffer && ft_strchr(buffer, '\n', 1))
 			return (get_the_line(&buffer, 0));
 	}
@@ -116,7 +116,7 @@ char	*get_next_line(int fd)
 		free(buffer);
 		buffer = NULL;
 		if (!line)
-			return (NULL);
+			return (close(fd), NULL);
 		return (line);
 	}
 	return (0);

@@ -12,7 +12,7 @@
 
 #include "minirt.h"
 
-int	check_str(char *str)
+void	check_str(char *str)
 {
 	int	i;
 	int	a;
@@ -29,11 +29,14 @@ int	check_str(char *str)
 		else if (c == '\n')
 			a = 0;
 		else if ((c < '0' || c > '9') && (c < 9 || c > 13)
-				&& c != 32 && c != ',' && c != '.' && c != '-')
-			return (printf("%c \n", c),0);
+				&& c != 32 && c != ',' && c != '.' 
+				&& c != '-')
+		{
+			free(str);
+			terminate("Scene file check error", rt);
+		}
 		i++;
 	}
-	return (1);
 }
 
 void	check_vector(t_tuple tuple, int type, t_mini *rt)
@@ -94,11 +97,7 @@ void	create_scene(char *str, t_mini *rt)
 	int	num;
 	int	i;
 
-	if (!check_str(str))
-	{
-		free(str);
-		terminate("Scene file check error", rt);
-	}
+	check_str(str);
 	lines = ft_split(str, '\n', &num);
 	if (!lines)
 	{
@@ -111,9 +110,8 @@ void	create_scene(char *str, t_mini *rt)
 		free(str);
 		terminate(ERR_MALLOC, rt);
 	}
-	i = 0;
-	printf("num %d \n", num);
-	while (i < num)
+	i = -1;
+	while (++i < num)
 	{
 		if (!ft_strncmp(lines[i], "A", 1))
 			am_create(lines[i], rt);
@@ -125,8 +123,8 @@ void	create_scene(char *str, t_mini *rt)
 			sp_parse(lines[i], rt);
 		else if (!ft_strncmp(lines[i], "cy", 2))
 			cy_parse(lines[i], rt);
-	//	else if (!ft_strncmp(lines[i], "pl", 2))
-	//		pl_parse(lines[i], rt);
+		else if (!ft_strncmp(lines[i], "pl", 2))
+			pl_parse(lines[i], rt);
 		else if (!ft_strncmp(lines[i], "\n", 1))
 			return ;
 		else
@@ -137,11 +135,10 @@ void	create_scene(char *str, t_mini *rt)
 			printf("====== %s \n", lines[i]);
 			terminate("Scene file elements error 1",rt);
 		}
-		i++;
 	}
 	free(str);
 	free_double(lines);
-	if (!rt->scene.light || !rt->scene.ambient)
+	if (!rt->scene.light || !rt->scene.ambient|| !rt->scene.camera)
 			terminate("Scene file elements error 2",rt);
 }
 
@@ -159,10 +156,7 @@ void	parse(char *file, t_mini *rt)
 		terminate("Open failure", rt);
 	str = get_next_line(fd);
 	if (!str)
-	{
-		close(fd);
 		terminate("Empty scene file", rt);
-	}
 	scene = NULL;
 	while (str)
 	{
@@ -174,6 +168,5 @@ void	parse(char *file, t_mini *rt)
 		}
 		str = get_next_line(fd);
 	}
-	close(fd);
 	create_scene(scene, rt);
 }

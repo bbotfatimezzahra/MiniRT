@@ -14,7 +14,34 @@
 
 void	ca_create(char *str, t_mini *rt)
 {
-	(void)str;
-	(void)rt;
+	t_camera	*camera;
+	char	**infos;
+	int	length;
+
 	printf("Camera\n");
+	if (!rt->scene.camera)
+	{
+		infos = ft_split(str, ' ', &length);
+		if (length != 4)
+		{
+			free_double(infos);
+			free(str);
+			printf("length %d\n",length);
+			terminate("incorrect scene file camera\n", rt);
+		}
+		camera = ft_calloc(1, sizeof(t_camera));
+		if (!camera)
+		{
+			free_double(infos);
+			free(str);
+			terminate(ERR_MALLOC, rt);
+		}
+/*		*camera = set_camera(DIS_LENGTH, DIS_WIDTH,
+				check_ratio(ft_atod(infos[3]), 1, rt));
+		camera->transform = view_transform(tu_parse(infos[1], 
+				1, rt), tu_parse(infos[2], 0, rt),
+				tu_create(0, 1, 0, 0));
+*/		free_double(infos);
+		rt->scene.camera = camera;
+	}
 }

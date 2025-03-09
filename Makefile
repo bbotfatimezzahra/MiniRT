@@ -14,7 +14,7 @@ NAME = minirt
 CFILES = main.c tuples.c tuples_utils.c canvas.c clean.c matrix.c camera.c\
 	 transform.c ray.c intersect.c sphere.c vector.c light.c ft_split.c\
 	 material.c parse.c cylinder.c atod.c scene.c plane.c str_utils.c\
-	 Get_next_line/get_next_line_utils.c Get_next_line/get_next_line.c 
+	 Get_next_line/get_next_line_utils.c Get_next_line/get_next_line.c
 OFILES = $(CFILES:%.c=%.o)
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror #-fsanitize=address -g3
