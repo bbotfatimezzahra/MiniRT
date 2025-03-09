@@ -26,6 +26,7 @@ void	free_double(char **ptr)
 	while (ptr[i])
 		free(ptr[i++]);
 	free(ptr);
+	ptr = NULL;
 }
 
 void	free_scene(t_mini *rt)
