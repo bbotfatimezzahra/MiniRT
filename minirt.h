@@ -28,8 +28,8 @@
 # define GREEN 0x0000FF00
 # define RED 0xFF000000
 
-# define DIS_WIDTH 700
-# define DIS_LENGTH 700
+# define DIS_WIDTH 1000
+# define DIS_LENGTH 1000
 # define VECTOR 0
 # define POINT 1
 # define COLOR 2

@@ -37,6 +37,7 @@ void	li_create(char *str, t_mini *rt)
 			terminate(ERR_MALLOC, rt);
 		}
 		light->position = tu_parse(infos[1], POINT, rt);
+    print_tuple(light->position);
 		light->intensity = tu_scale(tu_parse(infos[3], 2, rt),
 					check_ratio(ft_atod(infos[2]), 0, rt));
 		light->count = 1;

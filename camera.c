@@ -41,6 +41,7 @@ void	ca_create(char *str, t_mini *rt)
 		camera->transform = view_transform(tu_parse(infos[1], 
 				1, rt), tu_parse(infos[2], 0, rt),
 				tu_create(0, 1, 0, 0));
+    print_matrix(camera->transform);
 		free_double(infos);
 		rt->scene.camera = camera;
 	}

@@ -1,11 +1,11 @@
 #include "minirt.h"
 
-
 t_compute prepare(t_intersections xs, t_ray ray)
 {
   t_compute  new;
   
   new.xs = hit(xs);
+  new.obj = new.xs.object;
   new.point = ray_position(ray, hit(xs).t);
   new.eyev = tu_negate(ray.direction);
   new.normalv = ve_normal_at(new.xs.object, new.point);
@@ -27,10 +27,9 @@ t_color color_at(t_scene s, t_ray r, int reflect_recur_checker)
   t_compute cmp;
 
   xs_world = intersect_world(s, r);
+  /*printf("%d\n\n\n\n", xs_world.count);*/
   if (xs_world.count <= 0 || hit(xs_world).t < 0)
-  {
     return (tu_create(0, 0, 0, COLOR));
-  }
   cmp = prepare(xs_world, r);
   return (shade_hit(s, cmp, reflect_recur_checker));
 }
