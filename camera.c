@@ -36,5 +36,6 @@ void	ca_create(char *str, t_mini *rt)
 		print_matrix(camera->transform);
 		rt->scene.camera = camera;
 		free_double(rt->parse_infos);
+		rt->parse_infos = NULL;
 	}
 }

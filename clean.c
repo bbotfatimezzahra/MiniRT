@@ -74,8 +74,6 @@ void	terminate(char *error, t_mini *rt)
 		free(rt->con);
 	}
 	if (error)
-		ft_putendl_fd(error, 1);
-	else
-		perror(NULL);
+		ft_putendl_fd(error, 2);
 	exit(0);
 }

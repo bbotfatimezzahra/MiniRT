@@ -35,6 +35,7 @@ void	li_create(char *str, t_mini *rt)
 		light->count = 1;
 		rt->scene.light = light;
 		free_double(rt->parse_infos);
+		rt->parse_infos = NULL;
 	}
 }
 
@@ -58,6 +59,7 @@ void	am_create(char *str, t_mini *rt)
 				check_ratio(ft_atod(infos[1]), 0, rt));
 		rt->scene.ambient = ambient;
 		free_double(rt->parse_infos);
+		rt->parse_infos = NULL;
 	}
 }
 

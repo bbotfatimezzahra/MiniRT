@@ -80,6 +80,7 @@ void	create_scene(t_mini *rt)
 	free(rt->parse_str);
 	rt->parse_str = NULL;
 	free_double(rt->parse_elems);
+	rt->parse_elems = NULL;
 }
 
 void	parse_file(char *file, t_mini *rt)
@@ -96,6 +97,7 @@ void	parse_file(char *file, t_mini *rt)
 	str = get_next_line(fd);
 	if (!str)
 		terminate("Empty scene file", rt);
+	printf("PARSE 4\n");
 	while (str)
 	{
 		rt->parse_str = ft_strjoin(rt->parse_str, str);
@@ -104,7 +106,11 @@ void	parse_file(char *file, t_mini *rt)
 			close(fd);
 			terminate(ERR_MALLOC, rt);
 		}
+		printf("PARSE 5\n");
 		str = get_next_line(fd);
+		printf("PARSE 6\n");
 	}
+		printf("PARSE 7\n");
 	create_scene(rt);
+		printf("PARSE 8\n");
 }

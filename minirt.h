@@ -28,8 +28,8 @@
 # define GREEN 0x0000FF00
 # define RED 0xFF000000
 
-# define DIS_WIDTH 50
-# define DIS_LENGTH 50
+# define DIS_WIDTH 10
+# define DIS_LENGTH 10
 # define VECTOR 0
 # define POINT 1
 # define COLOR 2
@@ -313,5 +313,6 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 void	print_tuple(t_tuple t1);
 void	print_matrix(t_matrix m1);
 void	print_ray(t_ray r1);
+void	print_objs(t_mini rt);
 
 #endif

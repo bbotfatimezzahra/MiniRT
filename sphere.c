@@ -42,6 +42,7 @@ void	sp_parse(char *str, t_mini *rt)
 	rt->scene.objs[rt->scene.count] = obj;
 	rt->scene.count++;
 	free_double(rt->parse_infos);
+	rt->parse_infos = NULL;
 }
 /*
 t_sphere	sp_transform(t_sphere sp, t_matrix matrix)

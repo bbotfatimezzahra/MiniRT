@@ -46,4 +46,5 @@ void	pl_parse(char *str, t_mini *rt)
 	rt->scene.objs[rt->scene.count] = obj;
 	rt->scene.count++;
 	free_double(rt->parse_infos);
+	rt->parse_infos = NULL;
 }
