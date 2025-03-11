@@ -26,9 +26,9 @@ t_intersect	hit(t_intersections xs)
 	if (!xs.count)
 		return (hit);
 	i = xs.count - 1;
-	while (i >= 0 && xs.inter[i].t >= 0)
+	while (i >= 0)
 	{
-		if (hit.t < 0 || (hit.t > xs.inter[i].t && xs.inter[i].t > EPS))
+		if ((hit.t < 0 || hit.t > xs.inter[i].t) && xs.inter[i].t > EPS)
 			hit = xs.inter[i];
 		i--;
 	}

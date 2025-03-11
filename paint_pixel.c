@@ -27,8 +27,7 @@ t_color color_at(t_scene s, t_ray r, int reflect_recur_checker)
   t_compute cmp;
 
   xs_world = intersect_world(s, r);
-  /*printf("%d\n\n\n\n", xs_world.count);*/
-  if (xs_world.count <= 0 || hit(xs_world).t < 0)
+  if (xs_world.count <= 0 || hit(xs_world).t < EPS)
     return (tu_create(0, 0, 0, COLOR));
   cmp = prepare(xs_world, r);
   return (shade_hit(s, cmp, reflect_recur_checker));
@@ -55,11 +54,11 @@ bool  pixel_is_shadow(t_scene s, t_tuple above_point)
   t_ray r;
 
   r.direction = tu_subtract(s.light->position , above_point);
-  r.direction = tu_normalize(r.direction);
   distance_point_light = tu_magnitude(r.direction);
+  r.direction = tu_normalize(r.direction);
   r.origin = above_point;
   xs = intersect_world(s, r);
-  if (hit(xs).t > 0.1 && hit(xs).t < distance_point_light - EPS)
+  if (hit(xs).t > EPS && hit(xs).t < distance_point_light)
     return (true);
   return (false);
 }

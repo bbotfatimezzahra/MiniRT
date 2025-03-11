@@ -59,7 +59,7 @@ t_intersections pl_intersect(t_ray r, t_object *pl)
   t_intersections xs;
 
   xs.count = 0;
-  if (fabs(r.direction.y) < 0.1)
+  if (fabs(r.direction.y) < EPS)
     return (xs);
   xs.inter[0].t = (-r.origin.y / r.direction.y);
   xs.count = 1;
