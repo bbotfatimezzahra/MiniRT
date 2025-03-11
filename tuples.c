@@ -53,6 +53,8 @@ t_tuple	tu_normalize(t_tuple t1)
 	double	magn;
 
 	magn = tu_magnitude(t1);
+  if (magn == 0)
+    return (t1);
 	norm.x = t1.x / magn;
 	norm.y = t1.y / magn;
 	norm.z = t1.z / magn;

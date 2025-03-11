@@ -277,7 +277,7 @@ t_pattern new_pattern(t_color a, t_color b, t_pattern_type type);
 void	put_pixel(t_mini *rt, int x, int y, int color);
 void  render_a_scene(t_mini *mini);
 t_camera  set_camera(double hsize, double vsize, double fov);
-t_matrix view_transform(t_point from, t_vector orientation, t_vector up);
+t_matrix view_transform(t_point from, t_vector orientation);
 
 //------------------------- Parsing and initialization ----------------------------
 

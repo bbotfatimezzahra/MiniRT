@@ -1,6 +1,8 @@
 #include "minirt.h"
 
-t_matrix view_transform(t_point from, t_vector orientation, t_vector up)
+static t_vector  find_non_parallel_ve(t_vector v);
+
+t_matrix view_transform(t_point from, t_vector orientation)
 {
     t_vector forward;
     t_vector left;
@@ -10,7 +12,7 @@ t_matrix view_transform(t_point from, t_vector orientation, t_vector up)
     
 
     forward = tu_normalize(orientation);
-    normalize_up = tu_normalize(up);
+    normalize_up = tu_normalize(find_non_parallel_ve(orientation));
     left = tu_cross(forward, normalize_up);
     left = tu_normalize(left);
     real_up = tu_cross(left, forward);
@@ -90,3 +92,11 @@ void  render_a_scene(t_mini *mini)
   }
 }
 
+static t_vector  find_non_parallel_ve(t_vector v)
+{
+  if (tu_magnitude(tu_cross(v, tu_create(0, 0, 1, VECTOR))) != 0)
+    return (tu_create(0, 0, 1, VECTOR));
+  if (tu_magnitude(tu_cross(v, tu_create(0, 1, 0, VECTOR))) != 0)
+    return (tu_create(0, 1, 0, VECTOR));   
+  return (tu_create(1, 0, 0, VECTOR));
+}
