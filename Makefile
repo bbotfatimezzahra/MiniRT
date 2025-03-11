@@ -4,7 +4,7 @@ CFILES = main.c tuples.c tuples_utils.c canvas.c clean.c matrix.c camera.c\
 	 transform.c ray.c intersect_obj.c intersect_world.c sphere.c compute_vectors.c light.c ft_split.c\
 	 material.c parse.c cylinder.c atod.c scene.c plane.c str_utils.c\
 	 Get_next_line/get_next_line_utils.c Get_next_line/get_next_line.c paint_pixel.c\
-	 reflect_and_refract.c patterns.c render_scene.c parse_utils.c print.c\
+	 reflect_and_refract.c patterns.c render_scene.c parse_utils.c print.c cone.c\
 	
 OFILES = $(CFILES:%.c=%.o)
 

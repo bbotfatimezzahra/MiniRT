@@ -36,40 +36,47 @@ void	print_ray(t_ray r)
 	print_tuple(r.direction);
 }
 
-void	print_objs(t_mini rt)
+void	print_scene(t_mini rt)
 {
 	int	i;
 	t_material	material;
 
 	printf("**************************************************\n");
-	printf("Scene :\n");
-	printf("=Light := \n count %d \n position :", rt.scene.light->count);
+	printf("		 ****Scene****\n");
+	printf("=Camera :=\n");
+	print_matrix(rt.scene.camera->transform);
+	printf("======================================\n");
+	printf("=Light := count %d \n	position :", rt.scene.light->count);
 	print_tuple(rt.scene.light->position);
-	printf("intensity :");
+	printf("	intensity :");
 	print_tuple(rt.scene.light->intensity);
-	printf("Ambient :");
+	printf("======================================\n");
+	printf("=Ambient :=\n");
 	print_tuple(*rt.scene.ambient);
-	printf("Objects : count %d \n", rt.scene.count);
+	printf("======================================\n");
+	printf("=Objects := count %d \n", rt.scene.count);
 	i = -1;
 	while (++i < rt.scene.count)
 	{
-		printf("id : %d\n",rt.scene.objs[i]->id);
-		printf("type : ");
+		printf("	id : %d\n",rt.scene.objs[i]->id);
+		printf("	type : ");
 		if (rt.scene.objs[i]->type == SPHERE)
 			printf("SPHERE\n");
 		else if (rt.scene.objs[i]->type == CYLINDER)
 			printf("CYLINDER\n");
 		else if (rt.scene.objs[i]->type == PLANE)
 			printf("PLANE\n");
+		else if (rt.scene.objs[i]->type == CONE)
+			printf("CONE\n");
 		else
 			printf("ELSE\n");
-		printf("obj : %p\n", rt.scene.objs[i]->obj);
-		printf("material : color ");
+		printf("	obj : %p\n", rt.scene.objs[i]->obj);
+		printf("	material : color ");
 		material = rt.scene.objs[i]->material;
 		print_tuple(material.color);
-		printf("transform : ");
+		printf("	transform : ");
 		print_matrix(rt.scene.objs[i]->transform);
-		printf("=========================\n");
+		printf("--------------------------\n");
 	}
 	printf("**************************************************\n");
 }

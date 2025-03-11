@@ -28,14 +28,15 @@
 # define GREEN 0x0000FF00
 # define RED 0xFF000000
 
-# define DIS_WIDTH 500
-# define DIS_LENGTH 500
+# define DIS_WIDTH 1000
+# define DIS_LENGTH 1000
 # define VECTOR 0
 # define POINT 1
 # define COLOR 2
 # define SPHERE 0
 # define CYLINDER 1
 # define PLANE 2
+# define CONE 3
 # define EPS 0.00001
 # define PI 3.14
 
@@ -47,15 +48,6 @@ typedef enum  e_pattern_type
   RING,
   CHECKER
 } t_pattern_type;
-
-typedef struct s_bresen
-{
-	int	dx;
-	int	dy;
-	int	error[2];
-	int	sx;
-	int	sy;
-}		t_bresen;
 
 typedef struct s_tuple
 {
@@ -94,13 +86,12 @@ typedef struct s_pattern
 typedef struct s_material
 {
 	t_color	color;
-  t_pattern pattern;
-	double	ambient;
+	t_pattern pattern;
 	double	diffuse;
 	double	specular;
 	double	shininess;
-  double reflective;
-  double transparency;
+	double reflective;
+	double transparency;
 }	t_material;
 
 typedef struct s_sphere
@@ -119,6 +110,16 @@ typedef struct s_cylinder
 	double	miny;
 	double	maxy;
 }	t_cylinder;
+
+typedef struct s_cone
+{
+	int	count;
+	t_point	origin;
+	double	radius;
+	int	cap;
+	double	miny;
+	double	maxy;
+}	t_cone;
 
 typedef	struct s_object
 {
@@ -155,10 +156,10 @@ typedef struct s_camera
 {
   double horizontal_size;
   double vertical_size;
-  t_matrix transform;
   double half_width;
   double half_hight;
   double pixel_size;
+  t_matrix transform;
 }	t_camera;
 
 typedef struct s_scene
@@ -244,11 +245,12 @@ t_sphere        sp_transform(t_sphere sp, t_matrix matrix);
 t_intersections sp_intersect(t_object *sp, t_ray ray, t_intersections xs);
 t_intersections w_intersect(t_scene scene, t_ray ray);
 t_intersections cy_intersect(t_object *cy, t_ray ray, t_intersections xs);
+t_intersections co_intersect(t_object *co, t_ray ray, t_intersections xs);
 t_intersect     hit(t_intersections inter);
 t_intersections intersect_world(t_scene s, t_ray r);
 
 //------------------------- compute lighting utils ------------------------------
-
+void	ve_co_normal(t_point obj_point, t_vector *wrd_n, t_vector obj_n, t_object obj);
 void      ve_cy_normal(t_point obj_point, t_vector *wrd_n, t_vector obj_n, t_object obj);
 t_vector  ve_reflection(t_point in, t_vector normal);
 t_tuple   ve_normal_at(t_object *obj, t_tuple point);
@@ -262,7 +264,7 @@ t_color color_at(t_scene s, t_ray r, int reflect_recur_checker);
 t_color reflect_color(t_compute cmp, t_scene s, int reflect_recur_checker);
 t_color refracted_color(t_scene s, t_compute cmp, int recursive_limit);
 unsigned long rgb_to_hex(t_color c);
-t_color	lighting(t_compute cmp, t_light light, bool shade);
+t_color	lighting(t_scene s, t_compute cmp, t_light light, bool shade);
 
 //-------------------------------- Patterns --------------------------------------
 
@@ -291,6 +293,8 @@ t_material	m_create(t_color color);
 t_scene	w_create(t_light light[10], t_sphere sp[10]);
 t_object	*cy_create(t_mini *rt);
 void	cy_parse(char *str, t_mini *rt);
+void	co_parse(char *str, t_mini *rt);
+t_object	*co_create(t_mini *rt);
 void	parse_file(char *file, t_mini *rt);
 void	ca_create(char *str, t_mini *rt);
 void	pl_parse(char *str, t_mini *rt);
@@ -313,6 +317,6 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 void	print_tuple(t_tuple t1);
 void	print_matrix(t_matrix m1);
 void	print_ray(t_ray r1);
-void	print_objs(t_mini rt);
+void	print_scene(t_mini rt);
 
 #endif

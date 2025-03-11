@@ -54,6 +54,8 @@ void	fill_scene(t_mini *rt, int num)
 			sp_parse(elems[i], rt);
 		else if (!ft_strncmp(elems[i], "cy", 2))
 			cy_parse(elems[i], rt);
+		else if (!ft_strncmp(elems[i], "co", 2))
+			co_parse(elems[i], rt);
 		else if (!ft_strncmp(elems[i], "pl", 2))
 			pl_parse(elems[i], rt);
 		else if (!ft_strncmp(elems[i], "\n", 1))
@@ -97,7 +99,6 @@ void	parse_file(char *file, t_mini *rt)
 	str = get_next_line(fd);
 	if (!str)
 		terminate("Empty scene file", rt);
-	printf("PARSE 4\n");
 	while (str)
 	{
 		rt->parse_str = ft_strjoin(rt->parse_str, str);
@@ -106,11 +107,7 @@ void	parse_file(char *file, t_mini *rt)
 			close(fd);
 			terminate(ERR_MALLOC, rt);
 		}
-		printf("PARSE 5\n");
 		str = get_next_line(fd);
-		printf("PARSE 6\n");
 	}
-		printf("PARSE 7\n");
 	create_scene(rt);
-		printf("PARSE 8\n");
 }

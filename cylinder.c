@@ -5,7 +5,6 @@ t_object	*cy_create(t_mini *rt)
 	t_object	*obj;
 	t_cylinder	*cy;
 
-	printf("Cyllinder\n");
 	obj = ft_calloc(1, sizeof(t_object));
 	if (!obj)
 		terminate(ERR_MALLOC, rt);

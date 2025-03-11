@@ -25,7 +25,20 @@ t_intersections	sp_intersect(t_object *sp, t_ray ray, t_intersections xs)
 	return (xs);
 }
 
-t_intersections	check_caps(t_object *cy, t_ray ray, t_intersections xs)
+t_intersections pl_intersect(t_ray r, t_object *pl)
+{
+  t_intersections xs;
+
+  xs.count = 0;
+  if (fabs(r.direction.y) < EPS)
+    return (xs);
+  xs.inter[0].t = (-r.origin.y / r.direction.y);
+  xs.count = 1;
+  xs.inter[0].object = pl;
+  return (xs);
+}
+
+t_intersections	check_cycaps(t_object *cy, t_ray ray, t_intersections xs)
 {
 	t_cylinder	*obj;
 	double	t;
@@ -54,19 +67,6 @@ t_intersections	check_caps(t_object *cy, t_ray ray, t_intersections xs)
 	return (xs);
 }
 
-t_intersections pl_intersect(t_ray r, t_object *pl)
-{
-  t_intersections xs;
-
-  xs.count = 0;
-  if (fabs(r.direction.y) < EPS)
-    return (xs);
-  xs.inter[0].t = (-r.origin.y / r.direction.y);
-  xs.count = 1;
-  xs.inter[0].object = pl;
-  return (xs);
-}
-
 static void  cy_util(t_intersections *xs, double c, t_ray ray, t_object *cy)
 {
   double y;
@@ -88,16 +88,16 @@ t_intersections	cy_intersect(t_object *cy, t_ray ray, t_intersections xs)
 
 	a = pow(ray.direction.x, 2) + pow(ray.direction.z, 2);
 	if (fabs(a) < EPS)
-		return (check_caps(cy, ray, xs));
+		return (check_cycaps(cy, ray, xs));
 	b = 2 * ray.origin.x * ray.direction.x + 2 * ray.origin.z * ray.direction.z;
 	c = pow(ray.origin.x, 2) + pow(ray.origin.z, 2) - 1;
 	disc = b * b - 4 * a * c;
 	if (disc < 0)
-		return (check_caps(cy, ray, xs));
+		return (check_cycaps(cy, ray, xs));
 	c = (-b - sqrt(disc)) / (2 * a);
   cy_util(&xs, c, ray, cy);
   c = (-b + sqrt(disc)) / (2 * a);
   cy_util(&xs, c, ray, cy);
-	return (check_caps(cy, ray, xs));
+	return (check_cycaps(cy, ray, xs));
 }
 

@@ -32,18 +32,45 @@ t_tuple  ve_normal_at(t_object *obj, t_tuple point)
   }
   else if (obj->type == CYLINDER)
     ve_cy_normal(object_point, &world_normal, object_normal, *obj);
+  else if (obj->type == CONE)
+    ve_co_normal(object_point, &world_normal, object_normal, *obj);
   return (tu_normalize(world_normal));
 }
 
 
 void	ve_cy_normal(t_point obj_point, t_vector *wrd_n, t_vector obj_n, t_object obj)
 {
-	if (fabs(obj_point.y - 1.f) < EPS)
+	double	dist;
+
+	dist = pow(obj_point.x, 2) + pow(obj_point.z, 2);
+	if (dist < 1 && fabs(obj_point.y - 1.f) < EPS)
 	  obj_n = tu_create(0, 1, 0, POINT);
-	else if (fabs(obj_point.y + 1.f) < EPS)
+	else if (dist < 1 && fabs(obj_point.y + 1.f) < EPS)
 	  obj_n = tu_create(0, -1, 0, 0);
 	else
 	  obj_n = tu_create(obj_point.x, 0, obj_point.z, 0);
+	obj_n = tu_normalize(obj_n);
+	*wrd_n = ma_tu_multiply(ma_transpose(ma_invert(obj.transform)), obj_n);
+	wrd_n->w = 0;
+}
+
+void	ve_co_normal(t_point obj_point, t_vector *wrd_n, t_vector obj_n, t_object obj)
+{
+	double	dist;
+	double	y;
+
+	dist = pow(obj_point.x, 2) + pow(obj_point.z, 2);
+	if (dist < 1 && fabs(obj_point.y - 1.f) < EPS)
+	  obj_n = tu_create(0, 1, 0, VECTOR);
+	else if (dist < 1 && fabs(obj_point.y + 1.f) < EPS)
+	  obj_n = tu_create(0, -1, 0, VECTOR);
+	else
+	{
+		y = sqrt(pow(obj_point.x, 2) + pow(obj_point.z, 2));
+		if (obj_point.y > 0)
+		y = -y;
+		obj_n = tu_create(obj_point.x, y, obj_point.z, VECTOR);
+	}
 	obj_n = tu_normalize(obj_n);
 	*wrd_n = ma_tu_multiply(ma_transpose(ma_invert(obj.transform)), obj_n);
 	wrd_n->w = 0;

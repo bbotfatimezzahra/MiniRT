@@ -29,7 +29,6 @@ void	li_create(char *str, t_mini *rt)
 		if (!light)
 			terminate(ERR_MALLOC, rt);
 		light->position = tu_parse(infos[1], POINT, rt);
-    print_tuple(light->position);
 		light->intensity = tu_scale(tu_parse(infos[3], 2, rt),
 					check_ratio(ft_atod(infos[2]), 0, rt));
 		light->count = 1;
@@ -92,7 +91,7 @@ t_color light_calc(t_vector lightv, t_compute cmp, t_color ef_color, t_light l)
 	return (tu_add(diffuse, specular));
 }
 
-t_color	lighting(t_compute cmp, t_light light, bool shade)
+t_color	lighting(t_scene scene, t_compute cmp, t_light light, bool shade)
 {
 	t_color	ef_color;
 	t_vector	lightv;
@@ -103,7 +102,7 @@ t_color	lighting(t_compute cmp, t_light light, bool shade)
   if (cmp.obj->material.pattern.enable == true)
     color = pattern_obj(cmp.obj->material.pattern, *cmp.obj, cmp.point);
 	ef_color = tu_multiply(color, light.intensity);
-	ambient = tu_scale(ef_color, cmp.obj->material.ambient);
+	ambient = tu_multiply(ef_color, *scene.ambient);
   if (shade)
     return (ambient);
 	lightv = tu_normalize(tu_subtract(light.position, cmp.point));

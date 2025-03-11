@@ -28,7 +28,11 @@ t_color color_at(t_scene s, t_ray r, int reflect_recur_checker)
 
   xs_world = intersect_world(s, r);
   if (xs_world.count <= 0 || hit(xs_world).t < EPS)
+  {
+	  if (hit(xs_world).object->type == CONE)
+		  printf("hello\n");
     return (tu_create(0, 0, 0, COLOR));
+  }
   cmp = prepare(xs_world, r);
   return (shade_hit(s, cmp, reflect_recur_checker));
 }
@@ -41,7 +45,7 @@ t_color shade_hit(t_scene s, t_compute cmp, int reflect_recur_checker)
 
   shade = false;
   shade = pixel_is_shadow(s, cmp.above_point); // here we probably have a problem with one sphere it adds a shadow to it
-  initial_color = lighting(cmp, *s.light, shade);
+  initial_color = lighting(s, cmp, *s.light, shade);
   reflected_color = reflect_color(cmp, s, reflect_recur_checker);
   return (tu_add(reflected_color, initial_color));
 }
