@@ -16,7 +16,7 @@ t_intersections  intersect_each(t_ray r, t_object *obj)
     return(pl_intersect(transformed_ray, obj));
   else if(obj->type == CYLINDER)
     return (cy_intersect(obj, transformed_ray, xs));
-   else if(obj->type == CONE)
+  else if(obj->type == CONE)
     return (co_intersect(obj, transformed_ray, xs));
   return (xs);
 }

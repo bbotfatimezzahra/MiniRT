@@ -68,7 +68,7 @@ void	ve_co_normal(t_point obj_point, t_vector *wrd_n, t_vector obj_n, t_object o
 	{
 		y = sqrt(pow(obj_point.x, 2) + pow(obj_point.z, 2));
 		if (obj_point.y > 0)
-		y = -y;
+		  y = -y;
 		obj_n = tu_create(obj_point.x, y, obj_point.z, VECTOR);
 	}
 	obj_n = tu_normalize(obj_n);

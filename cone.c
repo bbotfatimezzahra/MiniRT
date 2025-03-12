@@ -13,8 +13,8 @@ t_object	*co_create(t_mini *rt)
 		terminate(ERR_MALLOC, rt);
 	co->radius = 1;
 	co->origin = tu_create(0, 0, 0, POINT);
-	co->miny = -INFINITY;
-	co->maxy = INFINITY;
+	co->miny = -1;
+	co->maxy = 1;
 	co->cap = 0;
 	obj->type = CONE;
 	obj->material = m_create(tu_create(1,1,1,2));
@@ -59,7 +59,7 @@ t_intersections	check_caps(t_object *co, t_ray ray, t_intersections xs)
 
 	obj = (t_cone *)co->obj;
 	if (!obj->cap || fabs(ray.direction.y) < EPS)
-		return (printf("EXIT : count %d\n",xs.count),xs);
+		return (xs);
 	t = (obj->miny - ray.origin.y) / ray.direction.y;
 	x = ray.origin.x + t * ray.direction.x;
 	z = ray.origin.z + t * ray.direction.z;
@@ -76,7 +76,7 @@ t_intersections	check_caps(t_object *co, t_ray ray, t_intersections xs)
 		xs.inter[xs.count].object = co;
 		xs.inter[xs.count++].t = t;
 	}
-	return (printf("EXIT : count %d\n",xs.count),xs);
+	return (xs);
 }
 
 static void  co_util(t_intersections *xs, double c, t_ray ray, t_object *co)
@@ -100,16 +100,17 @@ t_intersections	co_intersect(t_object *co, t_ray ray, t_intersections xs)
 	double	c;
 	double	disc;
 
-	printf("ENTRY : count %d\n",xs.count);
 	a = pow(ray.direction.x, 2) - pow(ray.direction.y, 2) + pow(ray.direction.z, 2);
 	b = 2 * ray.origin.x * ray.direction.x - 2 * ray.origin.y * ray.direction.y + 2 * ray.origin.z * ray.direction.z;
 	c = pow(ray.origin.x, 2) - pow(ray.origin.y, 2) + pow(ray.origin.z, 2);
 	if (fabs(a) < EPS && fabs(b) < EPS )
-		return (check_caps(co, ray, xs));
+		return (xs);
 	else if (fabs(a) < EPS)
 	{
 		xs.inter[xs.count].object = co;
 		xs.inter[xs.count++].t = -c / (2 * b);
+    printf("before %f\n", xs.inter[0].t);
+    printf("after %f\n", hit(xs).t);
 		return (check_caps(co, ray, xs));
 	}
 	disc = b * b - 4 * a * c;
