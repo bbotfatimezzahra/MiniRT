@@ -37,7 +37,7 @@
 # define CYLINDER 1
 # define PLANE 2
 # define EPS 0.00001
-# define PI 3.14
+# define PI 3.1415
 
 
 typedef enum  e_pattern_type
@@ -202,6 +202,9 @@ typedef struct s_mini
 
 
 void	start_display(t_mini *rt);
+//---------------------------------- Math -------------------------------------
+
+t_matrix rodrigues_formula(t_vector orient, t_vector ini_vector);
 
 //----------------------------tuple and matrix manipulation -------------------
 

@@ -26,7 +26,7 @@ t_tuple  ve_normal_at(t_object *obj, t_tuple point)
   }
   else if (obj->type == PLANE)
   {
-    object_normal = tu_create(0, 1, 0, POINT); 
+    object_normal = tu_create(0, 1, 0, VECTOR); 
     world_normal = ma_tu_multiply(ma_transpose(ma_invert(obj->transform)), object_normal);
     world_normal.w = 0;
   }
@@ -39,9 +39,9 @@ t_tuple  ve_normal_at(t_object *obj, t_tuple point)
 void	ve_cy_normal(t_point obj_point, t_vector *wrd_n, t_vector obj_n, t_object obj)
 {
 	if (fabs(obj_point.y - 1.f) < EPS)
-	  obj_n = tu_create(0, 1, 0, POINT);
+	  obj_n = tu_create(0, 1, 0, VECTOR);
 	else if (fabs(obj_point.y + 1.f) < EPS)
-	  obj_n = tu_create(0, -1, 0, 0);
+	  obj_n = tu_create(0, -1, 0, VECTOR);
 	else
 	  obj_n = tu_create(obj_point.x, 0, obj_point.z, 0);
 	obj_n = tu_normalize(obj_n);

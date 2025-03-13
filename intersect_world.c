@@ -12,6 +12,8 @@ t_intersections  intersect_each(t_ray r, t_object *obj)
   transformed_ray = ray_transform(r, ma_invert(obj->transform));// here we convert the ray to object space
   if (obj->type == SPHERE)
     return (sp_intersect(obj, transformed_ray, xs));
+  if (obj->type == CYLINDER)
+    return (cy_intersect(obj, transformed_ray, xs));
   else if(obj->type == PLANE)
     return(pl_intersect(transformed_ray, obj));
   return (xs);

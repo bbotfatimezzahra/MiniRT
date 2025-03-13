@@ -41,8 +41,8 @@ void	cy_parse(char *str, t_mini *rt)
 	obj->transform = ma_translate(tu_parse(infos[1], 1, rt));
 	obj->transform = ma_multiply(obj->transform,
 			ma_scale(tu_create(a, ft_atod(infos[4]), a, 1)));
-//	obj->transform = ma_multiply(obj->transform,
-//			ma_rodrigues(tu_parse(infos[2], 0)));
+	obj->transform = ma_multiply(obj->transform,
+			rodrigues_formula(tu_parse(infos[2], 0, rt), tu_create(0, 1, 0, VECTOR)));
 	obj->material = m_create(tu_parse(infos[5], 2, rt));
 	obj->id = rt->scene.count;
 	rt->scene.objs[rt->scene.count] = obj;
