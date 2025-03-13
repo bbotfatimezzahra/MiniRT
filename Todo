@@ -1,12 +1,11 @@
-[ ] add plane to the objects
+[O] add plane to the objects
 [ ] implement rodregeuse formula for cylinder
-[ ] complete camera and plan parsing
-[ ] correct the cylinder lighting inside
+[O] complete camera and plan parsing
+[O] correct the cylinder lighting inside
 [ ] add refraction
-[ ] add coin and 
-[ ] add hocks 
-[ ] 
-[ ] 
+[ ] add cone
+[ ] add multilight
+[ ] check ambient if it require really multiply
 [ ] 
 [ ] 
 [ ] 

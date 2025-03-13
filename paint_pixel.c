@@ -62,7 +62,12 @@ bool  pixel_is_shadow(t_scene s, t_tuple above_point)
   r.direction = tu_normalize(r.direction);
   r.origin = above_point;
   xs = intersect_world(s, r);
-  if (hit(xs).t > EPS && hit(xs).t < distance_point_light)
+  if (hit(xs).t > EPS && hit(xs).t > distance_point_light)
+  {
+    printf("---1--%f----\n\n\n", hit(xs).t);
+    printf("---2--%f----\n\n\n", distance_point_light);
+  }
+  if (hit(xs).t > EPS && hit(xs).t - EPS <= distance_point_light)
     return (true);
   return (false);
 }
