@@ -34,9 +34,9 @@ void	sp_parse(char *str, t_mini *rt)
 		terminate("Incorrect scene file\n", rt);
 	obj = sp_create(rt);
 	a = ft_atod(infos[2]) / 2;
-	obj->transform = ma_translate(tu_parse(infos[1], 1, rt));
+	obj->transform = ma_scale(tu_create(a, a, a, 1));
 	obj->transform = ma_multiply(obj->transform,
-			ma_scale(tu_create(a, a, a, 1)));
+			ma_translate(tu_parse(infos[1], 1, rt)));
 	obj->material = m_create(tu_parse(infos[3], 2, rt));
 	obj->id = rt->scene.count;
 	rt->scene.objs[rt->scene.count] = obj;
@@ -44,9 +44,3 @@ void	sp_parse(char *str, t_mini *rt)
 	free_double(rt->parse_infos);
 	rt->parse_infos = NULL;
 }
-/*
-t_sphere	sp_transform(t_sphere sp, t_matrix matrix)
-{
-	sp.transform = ma_multiply(matrix, sp.transform);
-	return (sp);
-}*/

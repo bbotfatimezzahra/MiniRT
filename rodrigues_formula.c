@@ -41,7 +41,5 @@ t_matrix rodrigues_formula(t_vector final_dir, t_vector ini_vector)
     }
     i++;
   }
-  printf("this is my lovely matrix\n");
-  print_matrix(trans_ma);
   return (trans_ma);
 }

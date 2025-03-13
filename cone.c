@@ -14,7 +14,7 @@ t_object	*co_create(t_mini *rt)
 	co->radius = 1;
 	co->origin = tu_create(0, 0, 0, POINT);
 	co->miny = -1;
-	co->maxy = 1;
+	co->maxy = 0;
 	co->cap = 0;
 	obj->type = CONE;
 	obj->material = m_create(tu_create(1,1,1,2));
@@ -37,11 +37,11 @@ void	co_parse(char *str, t_mini *rt)
 		terminate("Incorrect scene file\n", rt);
 	obj = co_create(rt);
 	a = ft_atod(infos[3]) / 2;
-	obj->transform = ma_translate(tu_parse(infos[1], 1, rt));
+	obj->transform = rodrigues_formula(tu_parse(infos[2], 0, rt), tu_create(0, 1, 0, VECTOR));
+  obj->transform = ma_multiply(obj->transform,
+			ma_translate(tu_parse(infos[1], 1, rt)));
 	obj->transform = ma_multiply(obj->transform,
 			ma_scale(tu_create(a, ft_atod(infos[4]), a, 1)));
-//	obj->transform = ma_multiply(obj->transform,
-//			ma_rodrigues(tu_parse(infos[2], 0)));
 	obj->material = m_create(tu_parse(infos[5], 2, rt));
 	obj->id = rt->scene.count;
 	rt->scene.objs[rt->scene.count] = obj;
@@ -109,8 +109,6 @@ t_intersections	co_intersect(t_object *co, t_ray ray, t_intersections xs)
 	{
 		xs.inter[xs.count].object = co;
 		xs.inter[xs.count++].t = -c / (2 * b);
-    printf("before %f\n", xs.inter[0].t);
-    printf("after %f\n", hit(xs).t);
 		return (check_caps(co, ray, xs));
 	}
 	disc = b * b - 4 * a * c;
