@@ -70,37 +70,6 @@ t_intersect	hit(t_intersections xs)
 /*  }*/
 /*}*/
 
-/*t_intersections  intersect_world(t_world w, t_ray r)*/
-/*{*/
-/*  t_intersections world_xs;*/
-/*  t_intersections obj_xs; */
-/*  size_t i;*/
-/*  int j;*/
-/*  int k;*/
-/**/
-/*  i = 0;*/
-/*  k = 0;*/
-/*  world_xs.count = 0;*/
-/*  while (i < w.number_of_object)*/
-/*  {*/
-/*    obj_xs = intersect_each(r, &w.obj[i]);*/
-/*    if (obj_xs.count != 0)*/
-/*    {*/
-/*      j = 0;*/
-/*      world_xs.count += obj_xs.count;*/
-/*      while (j < obj_xs.count && world_xs.count < 1024)*/
-/*      {*/
-/*        world_xs.inter[k] = obj_xs.inter[j];*/
-/*        k++;*/
-/*        j++;*/
-/*      }*/
-/*    }*/
-/*    i++;*/
-/*  }*/
-/*  bubble_sort(world_xs);*/
-/*  return (world_xs);*/
-/*}*/
-
 t_intersections  intersect_world(t_scene s, t_ray r)
 {
   t_intersections world_xs;

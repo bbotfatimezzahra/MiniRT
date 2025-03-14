@@ -1,12 +1,14 @@
 #include "minirt.h"
 
+
+t_matrix  transf_ma(double thetha, t_matrix u_cross, t_matrix u_cross_squared);
+
 t_matrix rodrigues_formula(t_vector final_dir, t_vector ini_vector)
 {
   t_vector u;
   double thetha;
   t_matrix u_cross;
   t_matrix u_cross_squared;
-  t_matrix trans_ma;
 
   final_dir = tu_normalize(final_dir);
   u = tu_cross(ini_vector, final_dir);
@@ -19,11 +21,15 @@ t_matrix rodrigues_formula(t_vector final_dir, t_vector ini_vector)
   u_cross.rows = 3; 
   u_cross.cols = 3; 
   u_cross_squared = ma_multiply(u_cross, u_cross);
-  
+  return (transf_ma(thetha, u_cross, u_cross_squared));
+}
 
+t_matrix  transf_ma(double thetha, t_matrix u_cross, t_matrix u_cross_squared)
+{
   int i;
   int j;
   int k;
+  t_matrix trans_ma;
 
   i = 0;
   trans_ma = ma_identity(4);

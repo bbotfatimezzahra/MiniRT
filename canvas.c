@@ -12,14 +12,6 @@ unsigned long rgb_to_hex(t_color c)
     return ((unsigned long)(red & 0xff) << 16) | ((unsigned long)(green & 0xff) << 8) | (blue & 0xff);
 }
 
-/*void  put_pixel(int x, int y, int color, t_mlx mlx)*/
-/*{*/
-/*  int pixel_offset;*/
-/**/
-/*  pixel_offset = (y * mlx.img.size_line) + (x * (mlx.img.bpp / 8));*/
-/* *(int *)(mlx.img.data + pixel_offset) = color; */
-/*}*/
-
 void	put_pixel(t_mini *rt, int x, int y, int color)
 {
 	char	*dst;
