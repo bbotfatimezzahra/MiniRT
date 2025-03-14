@@ -1,0 +1,28 @@
+#Ambient  Ratio    Color
+
+A         0.4   255,255,255
+
+#Camera   Position  Orient  Fov
+
+C         0,6,-23   0,0,1  90
+
+#Light    Position  Intensity    Color
+
+L         0,4,-8       1      255,255,255
+
+#Cone     Position  Orient  Diameter  Height   Color    material_attribute_ratio( reflevtion , shininess )
+ 
+co        0,18,0   1,0,0.0    10       10     255,0,0         att:0.9,0.5
+
+
+#Cylinder Position  Orient  Diameter  Height   Color
+
+cy        0,18,0   1,0,0.0    10       10     255,0,0
+
+#Sphere   Position     Diameter  Color
+
+sp     0.0,0.0,20.6     12.6   10,0,255 
+
+#Plane  Point_in     Normal     Color
+
+pl     0.0,0.0,0.0    0,1,0.0   0,0,225
