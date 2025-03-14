@@ -45,7 +45,7 @@ t_color shade_hit(t_scene s, t_compute cmp, int reflect_recur_checker)
 
   shade = false;
   shade = pixel_is_shadow(s, cmp.above_point); // here we probably have a problem with one sphere it adds a shadow to it
-  initial_color = lighting(s, cmp, *s.light, shade);
+  initial_color = lighting(s, cmp, *s.light[0], shade);
   reflected_color = reflect_color(cmp, s, reflect_recur_checker);
   return (tu_add(reflected_color, initial_color));
 }
@@ -57,7 +57,7 @@ bool  pixel_is_shadow(t_scene s, t_tuple above_point)
   t_intersections xs;
   t_ray r;
 
-  r.direction = tu_subtract(s.light->position , above_point);
+  r.direction = tu_subtract(s.light[0]->position , above_point);
   distance_point_light = tu_magnitude(r.direction);
   r.direction = tu_normalize(r.direction);
   r.origin = above_point;

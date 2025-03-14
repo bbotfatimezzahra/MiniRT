@@ -18,23 +18,19 @@ void	li_create(char *str, t_mini *rt)
 	char	**infos;
 	int	length;
 
-	if (!rt->scene.light)
-	{
-		rt->parse_infos = ft_split(str, ' ', &length);
-		infos = rt->parse_infos;
-		if (length != 4 || ft_strncmp(infos[0], "L", 2))
-			terminate("incorrect scene file light\n", rt);
-		light = ft_calloc(1, sizeof(t_light));
-		if (!light)
-			terminate(ERR_MALLOC, rt);
-		light->position = tu_parse(infos[1], POINT, rt);
-		light->intensity = tu_scale(tu_parse(infos[3], 2, rt),
-					check_ratio(ft_atod(infos[2], rt), 0, rt));
-		light->count = 1;
-		rt->scene.light = light;
-		free_double(rt->parse_infos);
-		rt->parse_infos = NULL;
-	}
+	rt->parse_infos = ft_split(str, ' ', &length);
+	infos = rt->parse_infos;
+	if (length != 4 || ft_strncmp(infos[0], "L", 2))
+		terminate("incorrect scene file light\n", rt);
+	light = ft_calloc(1, sizeof(t_light));
+	if (!light)
+		terminate(ERR_MALLOC, rt);
+	rt->scene.light[rt->scene.numlight++] = light;
+	light->position = tu_parse(infos[1], POINT, rt);
+	light->intensity = tu_scale(tu_parse(infos[3], 2, rt),
+			check_ratio(ft_atod(infos[2], rt, 0), 0, rt));
+	free_double(rt->parse_infos);
+	rt->parse_infos = NULL;
 	printf("light\n");
 }
 
@@ -51,11 +47,11 @@ void	am_create(char *str, t_mini *rt)
 		if (length != 3|| ft_strncmp(infos[0], "A", 2))
 			terminate("incorrect scene file ambient\n", rt);
 		ambient = ft_calloc(1, sizeof(t_tuple));
+		rt->scene.ambient = ambient;
 		if (!ambient)
 			terminate(ERR_MALLOC, rt);
 		*ambient = tu_scale(tu_parse(infos[2], 2, rt), 
-				check_ratio(ft_atod(infos[1], rt), 0, rt));
-		rt->scene.ambient = ambient;
+				check_ratio(ft_atod(infos[1], rt, 0), 0, rt));
 		free_double(rt->parse_infos);
 		rt->parse_infos = NULL;
 	}

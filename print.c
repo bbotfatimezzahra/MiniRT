@@ -46,13 +46,19 @@ void	print_scene(t_mini rt)
 	printf("=Camera :=\n");
 	print_matrix(rt.scene.camera->transform);
 	printf("======================================\n");
-	printf("=Light := count %d \n	position :", rt.scene.light->count);
-	print_tuple(rt.scene.light->position);
-	printf("	intensity :");
-	print_tuple(rt.scene.light->intensity);
-	printf("======================================\n");
 	printf("=Ambient :=\n");
 	print_tuple(*rt.scene.ambient);
+	printf("======================================\n");
+	printf("=Lights := count %d \n", rt.scene.numlight);
+	i = -1;
+	while (++i < rt.scene.numlight)
+	{
+		printf("	num : %d\n	position :",i);
+		print_tuple(rt.scene.light[i]->position);
+		printf("	intensity :");
+		print_tuple(rt.scene.light[i]->intensity);
+		printf("--------------------------\n");
+	}
 	printf("======================================\n");
 	printf("=Objects := count %d \n", rt.scene.count);
 	i = -1;

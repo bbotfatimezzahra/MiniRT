@@ -84,11 +84,11 @@ void	ca_create(char *str, t_mini *rt)
 		camera = ft_calloc(1, sizeof(t_camera));
 		if (!camera)
 			terminate(ERR_MALLOC, rt);
+		rt->scene.camera = camera;
 		*camera = set_camera(DIS_WIDTH, DIS_LENGTH,
-				check_ratio(ft_atod(infos[3], rt), 1, rt));
+				check_ratio(ft_atod(infos[3], rt, 0), 1, rt));
 		camera->transform = view_transform(tu_parse(infos[1], 
 				1, rt), tu_parse(infos[2], 0, rt));
-		rt->scene.camera = camera;
 		free_double(rt->parse_infos);
 		rt->parse_infos = NULL;
 	}

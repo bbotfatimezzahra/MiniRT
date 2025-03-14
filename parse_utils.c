@@ -1,8 +1,37 @@
 #include "minirt.h"
 
+int	ft_isalpha(int c)
+{
+	if ((c < 'a' || c > 'z') && (c < 'A' || c > 'Z'))
+		return (0);
+	return (1);
+}
+
 int	ft_isdigit(int c)
 {
 	if ((c < '0' || c > '9') && c != '-')
+		return (0);
+	return (1);
+}
+
+int	ft_isfloat(char *str, int vector)
+{
+	int	i;
+
+	i = 0;
+	while (ft_isdigit(str[i]))
+		i++;
+	if (!i || (str[i] && str[i] != '.' && !vector))
+		return (0);
+	if (str[i] && str[i] == '.')
+	{
+		i++;
+		while (ft_isdigit(str[i]))
+			i++;
+	}
+	if (str[i] && vector && str[i] == ',')
+		return (1);
+	else if (str[i])
 		return (0);
 	return (1);
 }
@@ -36,17 +65,17 @@ t_tuple	tu_parse(char *str, int type, t_mini *rt)
 	t_tuple	tuple;
 	char	*num;
 
-	if (!str || !ft_isdigit(str[0]))
-		terminate("Incorrect values\n", rt);
-	coord[0] = ft_atod(str, rt);
+	coord[0] = ft_atod(str, rt, 1);
 	num = ft_strchr(str, ',', 1);
 	if (!num || !ft_isdigit(num[1]))
-		terminate("Incorrect values\n", rt);
-	coord[1] = ft_atod(&num[1], rt);
+		terminate("Incorrect scene file", rt);
+	coord[1] = ft_atod(&num[1], rt, 1);
 	num = ft_strchr(str, ',', 2);
 	if (!num || !ft_isdigit(num[1]))
-		terminate("Incorrect value\n", rt);
-	coord[2] = ft_atod(&num[1], rt);
+		terminate("Incorrect scene file", rt);
+	coord[2] = ft_atod(&num[1], rt, 1);
+	if (ft_strchr(str, ',', 3))
+		terminate("Incorrect scene file", rt);
 	tuple = tu_create(coord[0], coord[1], coord[2], type);
 	check_vector(tuple, type, rt);
 	if (type == 2)

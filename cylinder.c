@@ -35,16 +35,15 @@ void	cy_parse(char *str, t_mini *rt)
 	if (length != 6 || ft_strncmp(infos[0], "cy", 3))
 		terminate("Incorrect scene file\n", rt);
 	obj = cy_create(rt);
-	a = ft_atod(infos[3], rt) / 2;
+	rt->scene.objs[rt->scene.count++] = obj;
+	a = ft_atod(infos[3], rt, 0) / 2;
 	obj->transform = rodrigues_formula(tu_parse(infos[2], 0, rt), tu_create(0, 1, 0, VECTOR));
 	obj->transform = ma_multiply(obj->transform,
-			ma_scale(tu_create(a, ft_atod(infos[4], rt), a, 1)));
+			ma_scale(tu_create(a, ft_atod(infos[4], rt, 0), a, 1)));
 	obj->transform = ma_multiply(obj->transform,
 			ma_translate(tu_parse(infos[1], 1, rt)));
 	obj->material = m_create(tu_parse(infos[5], 2, rt));
 	obj->id = rt->scene.count;
-	rt->scene.objs[rt->scene.count] = obj;
-	rt->scene.count++;
 	free_double(rt->parse_infos);
 	rt->parse_infos = NULL;
 	printf("Cylinder\n");

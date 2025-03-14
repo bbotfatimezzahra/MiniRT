@@ -14,6 +14,7 @@ t_mini	init_mini(void)
 	rt.width = DIS_WIDTH;
 	rt.length = DIS_LENGTH;
 	rt.scene.light = NULL;
+	rt.scene.numlight = 0;
 	rt.scene.objs = NULL;
 	rt.scene.count = 0;
 	rt.scene.camera = NULL;

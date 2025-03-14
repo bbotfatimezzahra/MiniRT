@@ -29,26 +29,26 @@ void	free_double(char **ptr)
 	ptr = NULL;
 }
 
-void	free_scene(t_mini *rt)
+void	free_double_scene(t_mini *rt)
 {
-	int	i;
-
 	if (rt->scene.light)
+	{
+		while (--rt->scene.numlight >= 0)
+		{
+			if (rt->scene.light[rt->scene.numlight])
+				free(rt->scene.light[rt->scene.numlight]);
+		}
 		free(rt->scene.light);
-	if (rt->scene.camera)
-		free(rt->scene.camera);
-	if (rt->scene.ambient)
-		free(rt->scene.ambient);
+	}
 	if (rt->scene.objs)
 	{
-		i = -1;
-		while (++i < rt->scene.count)
+		while (--rt->scene.count >= 0)
 		{
-			if (rt->scene.objs[i])
+			if (rt->scene.objs[rt->scene.count])
 			{
-				if (rt->scene.objs[i]->obj)
-					free(rt->scene.objs[i]->obj);
-				free(rt->scene.objs[i]);
+				if (rt->scene.objs[rt->scene.count]->obj)
+					free(rt->scene.objs[rt->scene.count]->obj);
+				free(rt->scene.objs[rt->scene.count]);
 			}
 		}
 		free(rt->scene.objs);
@@ -57,7 +57,11 @@ void	free_scene(t_mini *rt)
 
 void	terminate(char *error, t_mini *rt)
 {
-	free_scene(rt);
+	free_double_scene(rt);
+	if (rt->scene.camera)
+		free(rt->scene.camera);
+	if (rt->scene.ambient)
+		free(rt->scene.ambient);
 	if (rt->parse_str)
 		free(rt->parse_str);
 	if (rt->parse_elems)

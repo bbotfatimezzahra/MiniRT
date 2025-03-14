@@ -12,37 +12,43 @@
 
 #include "minirt.h"
 
-void	check_str(t_mini *rt)
+void	check_elems(t_mini *rt, int *obj, int *light)
 {
 	int	i;
-	int	a;
-	char	c;
+	int	j;
+	char	*c;
 
-	i = 0;
-	a = 0;
-	while (rt->parse_str[i])
+	i = -1;
+	while (rt->parse_elems[++i])
 	{
-		c = rt->parse_str[i];
-		if (((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
-				&& a < 2)
-			a++;
-		else if (c == '\n')
-			a = 0;
-		else if ((c < '0' || c > '9') && (c < 9 || c > 13)
-				&& c != 32 && c != ',' && c != '.' 
-				&& c != '-')
-			terminate("Scene file check error", rt);
-		i++;
+		c = rt->parse_elems[i];
+		if (!ft_isalpha(c[0]) && ft_strncmp(c, "", 2))
+			terminate("Incorrect scene file",rt);
+		j = 0;
+		if (c[0] == 'L')
+			(*light)++;
+		else if (c[0] != 'A' && c[0] != 'C')
+		{
+			(*obj)++;
+			j++;
+		}
+		while (!c[++j])
+		{
+			if(!ft_isdigit(c[j]) && c[j] != 32 && c[j] != ',' 
+				&& c[j] != '.' && c[j] != '-')
+				terminate("Scene file check error", rt);
+		}
 	}
 }
-void	fill_scene(t_mini *rt, int num)
+
+void	fill_scene(t_mini *rt)
 {
 	char	**elems;
 	int	i;
 
 	elems = rt->parse_elems;
 	i = -1;
-	while (++i < num)
+	while (elems[++i])
 	{
 		if (!ft_strncmp(elems[i], "A", 1))
 			am_create(elems[i], rt);
@@ -58,7 +64,7 @@ void	fill_scene(t_mini *rt, int num)
 			co_parse(elems[i], rt);
 		else if (!ft_strncmp(elems[i], "pl", 2))
 			pl_parse(elems[i], rt);
-		else if (!ft_strncmp(elems[i], "\n", 1))
+		else if (!ft_strncmp(elems[i], "", 2))
 			return ;
 		else
 			terminate("Scene file elements error 1",rt);
@@ -67,16 +73,24 @@ void	fill_scene(t_mini *rt, int num)
 
 void	create_scene(t_mini *rt)
 {
-	int	num;
+	int	light;
+	int	obj;
 
-	check_str(rt);
-	rt->parse_elems = ft_split(rt->parse_str, '\n', &num);
+	rt->parse_elems = ft_split(rt->parse_str, '\n', &light);
 	if (!rt->parse_elems)
 		terminate(ERR_MALLOC, rt);
-	rt->scene.objs = ft_calloc(num, sizeof(t_object *));
+	light = 0;
+	obj = 0;
+	check_elems(rt, &obj, &light);
+	if (!light)
+		terminate("Scene file elements error 2",rt);
+	rt->scene.light = ft_calloc(light, sizeof(t_light *));
+	if (!rt->scene.light)
+		terminate(ERR_MALLOC, rt);
+	rt->scene.objs = ft_calloc(obj, sizeof(t_object *));
 	if (!rt->scene.objs)
 		terminate(ERR_MALLOC, rt);
-	fill_scene(rt, num);
+	fill_scene(rt);
 	if (!rt->scene.light || !rt->scene.ambient|| !rt->scene.camera)
 		terminate("Scene file elements error 2",rt);
 	free(rt->parse_str);

@@ -17,7 +17,7 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 }
 
 
-double	float_point(double num, const char *str)
+double	float_point(double num, char *str)
 {
 	long double	result;
 	int			i;
@@ -33,17 +33,18 @@ double	float_point(double num, const char *str)
 			return (0);
 		i++;
 	}
-	result = result * pow(10, -i);
+	result = result * pow(10, -(i - 1));
+	printf("atod |%Lf| num |%f|\n",result, num);
 	return (num + result);
 }
 
-double	ft_atod(const char *str, t_mini *rt)
+double	ft_atod(char *str, t_mini *rt, int a)
 {
 	long double	result;
 	int	sign;
 	int	i;
 
-	if (!str || !ft_isdigit(str[0]))
+	if (!str || !ft_isfloat(str, a))
 		terminate("Incorrect values", rt);
 	result = 0;
 	sign = 1;

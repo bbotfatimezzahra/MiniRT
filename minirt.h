@@ -28,8 +28,8 @@
 # define GREEN 0x0000FF00
 # define RED 0xFF000000
 
-# define DIS_WIDTH 1000
-# define DIS_LENGTH 1000
+# define DIS_WIDTH 10
+# define DIS_LENGTH 10
 # define VECTOR 0
 # define POINT 1
 # define COLOR 2
@@ -128,12 +128,11 @@ typedef	struct s_object
 	void	*obj;
 	t_material	material;
 	t_matrix	transform;
-  struct s_object *next;
 }	t_object;
 
 typedef struct s_intersect
 {
-	t_object*	object;
+	t_object	*object;
 	double	t;
 }	t_intersect;
 
@@ -147,7 +146,6 @@ typedef struct s_intersections
 typedef struct s_light
 {
 	int	count;
-	int	type;
 	t_color	intensity;
 	t_point	position;
 }	t_light;
@@ -164,7 +162,8 @@ typedef struct s_camera
 
 typedef struct s_scene
 {
-	t_light	*light;
+	t_light	**light;
+	int	numlight;
 	t_object	**objs;
 	int	count;
 	t_camera	*camera;
@@ -310,11 +309,13 @@ void	terminate(char *error, t_mini *rt);
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
 char	**ft_split(char const *s, char c, int *length);
-double	ft_atod(const char *str, t_mini *rt);
+double	ft_atod(char *str, t_mini *rt, int vector);
 void	free_double(char **ptr);
 void	*ft_calloc(size_t count, size_t size);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 int	ft_isdigit(int c);
+int	ft_isalpha(int c);
+int	ft_isfloat(char *str, int vector);
 
 //--------------------------for debugging purpose -------------------------------
 
