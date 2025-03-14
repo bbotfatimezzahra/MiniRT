@@ -1,5 +1,12 @@
 #include "minirt.h"
 
+int	ft_isdigit(int c)
+{
+	if ((c < '0' || c > '9') && c != '-')
+		return (0);
+	return (1);
+}
+
 void	check_vector(t_tuple tuple, int type, t_mini *rt)
 {
 	double	min;
@@ -27,10 +34,19 @@ t_tuple	tu_parse(char *str, int type, t_mini *rt)
 {
 	double	coord[3];
 	t_tuple	tuple;
+	char	*num;
 
-	coord[0] = ft_atod(str);
-	coord[1] = ft_atod(&ft_strchr(str, ',', 1)[1]);
-	coord[2] = ft_atod(&ft_strchr(str, ',', 2)[1]);
+	if (!str || !ft_isdigit(str[0]))
+		terminate("Incorrect values\n", rt);
+	coord[0] = ft_atod(str, rt);
+	num = ft_strchr(str, ',', 1);
+	if (!num || !ft_isdigit(num[1]))
+		terminate("Incorrect values\n", rt);
+	coord[1] = ft_atod(&num[1], rt);
+	num = ft_strchr(str, ',', 2);
+	if (!num || !ft_isdigit(num[1]))
+		terminate("Incorrect value\n", rt);
+	coord[2] = ft_atod(&num[1], rt);
 	tuple = tu_create(coord[0], coord[1], coord[2], type);
 	check_vector(tuple, type, rt);
 	if (type == 2)

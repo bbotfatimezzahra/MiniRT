@@ -310,10 +310,11 @@ void	terminate(char *error, t_mini *rt);
 
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
 char	**ft_split(char const *s, char c, int *length);
-double	ft_atod(const char *str);
+double	ft_atod(const char *str, t_mini *rt);
 void	free_double(char **ptr);
 void	*ft_calloc(size_t count, size_t size);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
+int	ft_isdigit(int c);
 
 //--------------------------for debugging purpose -------------------------------
 

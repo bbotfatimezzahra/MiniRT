@@ -79,13 +79,13 @@ void	ca_create(char *str, t_mini *rt)
 	{
 		rt->parse_infos = ft_split(str, ' ', &length);
 		infos = rt->parse_infos;
-		if (length != 4)
+		if (length != 4 || ft_strncmp(infos[0], "C", 2))
 			terminate("incorrect scene file camera\n", rt);
 		camera = ft_calloc(1, sizeof(t_camera));
 		if (!camera)
 			terminate(ERR_MALLOC, rt);
 		*camera = set_camera(DIS_WIDTH, DIS_LENGTH,
-				check_ratio(ft_atod(infos[3]), 1, rt));
+				check_ratio(ft_atod(infos[3], rt), 1, rt));
 		camera->transform = view_transform(tu_parse(infos[1], 
 				1, rt), tu_parse(infos[2], 0, rt));
 		rt->scene.camera = camera;

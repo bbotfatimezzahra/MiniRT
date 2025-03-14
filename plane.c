@@ -35,7 +35,7 @@ void	pl_parse(char *str, t_mini *rt)
 	printf("Plane\n");
 	rt->parse_infos = ft_split(str, ' ', &length);
 	infos = rt->parse_infos;
-	if (length != 4)
+	if (length != 4 || ft_strncmp(infos[0], "pl", 3))
 		terminate("Incorrect scene file\n", rt);
 	obj = pl_create(rt);
 	obj->transform = rodrigues_formula(tu_normalize(tu_parse(infos[2], 0, rt)), tu_create(0, 1, 0, 0));
