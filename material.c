@@ -13,8 +13,10 @@ t_material	m_create(t_tuple color)
 	return (ma);
 }
 
-t_material	m_parse(t_mini *rt, t_material ma, int i)
+t_material	m_parse(t_mini *rt, t_material ma, int length, int i)
 {
+	if (length - i != 4)
+		terminate("Incorrect scene file", rt);
 	ma.specular = check_ratio(ft_atod(rt->parse_infos[i], rt, 0), 0, rt);
 	ma.reflective = check_ratio(ft_atod(rt->parse_infos[++i], rt, 0), 0, rt);
 	ma.shininess = check_ratio(ft_atod(rt->parse_infos[++i], rt, 0), 3, rt);

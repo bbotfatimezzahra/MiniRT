@@ -41,7 +41,7 @@ void	check_vector(t_tuple tuple, int type, t_mini *rt)
 	double	min;
 	double	max;
 
-	if (!tuple.x && !tuple.y && !tuple.z)
+	if (!type && !tuple.x && !tuple.y && !tuple.z)
 		terminate("Incorrect scene file", rt);
 	if (type == 0)
 	{

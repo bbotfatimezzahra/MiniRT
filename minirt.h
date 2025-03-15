@@ -301,7 +301,7 @@ void	ca_create(char *str, t_mini *rt);
 void	pl_parse(char *str, t_mini *rt);
 t_tuple	tu_parse(char *str, int type, t_mini *rt);
 double	check_ratio(double value, int type, t_mini *rt);
-t_material	m_parse(t_mini *rt, t_material ma, int i);
+t_material	m_parse(t_mini *rt, t_material ma, int length, int i);
 
 void	terminate(char *error, t_mini *rt);
 

@@ -44,7 +44,7 @@ void	pl_parse(char *str, t_mini *rt)
                                , obj->transform);
 	obj->material = m_create(tu_parse(infos[3], 2, rt));
 	if (length > 4)
-		obj->material = m_parse(rt, obj->material, 4);
+		obj->material = m_parse(rt, obj->material, length, 4);
 	obj->id = rt->scene.count;
 	free_double(rt->parse_infos);
 	rt->parse_infos = NULL;

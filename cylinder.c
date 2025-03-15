@@ -44,7 +44,7 @@ void	cy_parse(char *str, t_mini *rt)
                               , obj->transform);
 	obj->material = m_create(tu_parse(infos[5], 2, rt));
 	if (length > 6)
-		obj->material = m_parse(rt, obj->material, 6);
+		obj->material = m_parse(rt, obj->material, length, 6);
 	obj->id = rt->scene.count;
 	free_double(rt->parse_infos);
 	rt->parse_infos = NULL;
