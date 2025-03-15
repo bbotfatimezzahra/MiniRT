@@ -1,4 +1,4 @@
-#include "minirt.h"
+#include "../minirt.h"
 
 t_tuple	tu_create(double x, double y, double z, int w)
 {

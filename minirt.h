@@ -14,7 +14,7 @@
 # include <math.h>
 # include <stdlib.h>
 # include <float.h>
-# include "./Get_next_line/get_next_line.h"
+# include "./utils/Get_next_line/get_next_line.h"
 
 # define ERR_USAGE "Usage : ./minirt Map_file(file.rt)"
 # define ERR_MAP "Incorrect Map file"
@@ -278,7 +278,7 @@ t_pattern new_pattern(void);
 //------------------------------- Render scene ------------------------------------
 
 void	put_pixel(t_mini *rt, int x, int y, int color);
-void  render_a_scene(t_mini *mini);
+void  render_scene(t_mini *mini);
 t_camera  set_camera(double hsize, double vsize, double fov);
 t_matrix view_transform(t_point from, t_vector orientation);
 

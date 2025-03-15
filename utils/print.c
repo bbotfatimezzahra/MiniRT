@@ -1,4 +1,4 @@
-#include "minirt.h"
+#include "../minirt.h"
 
 void	print_tuple(t_tuple t)
 {

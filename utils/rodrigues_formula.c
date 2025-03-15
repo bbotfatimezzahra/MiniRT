@@ -1,4 +1,4 @@
-#include "minirt.h"
+#include "../minirt.h"
 
 
 t_matrix  transf_ma(double thetha, t_matrix u_cross, t_matrix u_cross_squared);

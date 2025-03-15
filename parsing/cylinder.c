@@ -1,4 +1,4 @@
-#include "minirt.h"
+#include "../minirt.h"
 
 t_object	*cy_create(t_mini *rt)
 {

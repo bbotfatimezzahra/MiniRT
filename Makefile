@@ -1,11 +1,16 @@
 NAME = minirt
 
-CFILES = main.c tuples.c tuples_utils.c canvas.c clean.c matrix.c camera.c\
-	 transform.c ray.c intersect_obj.c intersect_world.c sphere.c compute_vectors.c light.c ft_split.c\
-	 material.c parse.c cylinder.c atod.c scene.c plane.c str_utils.c\
-	 Get_next_line/get_next_line_utils.c Get_next_line/get_next_line.c paint_pixel.c\
-	 reflect_and_refract.c patterns.c render_scene.c parse_utils.c print.c cone.c\
-	 rodrigues_formula.c\
+CFILES = main.c\
+	utils/tuples.c utils/clean.c utils/matrix.c  utils/rodrigues_formula.c\
+	utils/Get_next_line/get_next_line_utils.c utils/Get_next_line/get_next_line.c\
+	utils/transform.c utils/ray.c utils/str_utils.c  utils/ft_split.c\
+	utils/atod.c utils/print.c\
+	utils/tuples_utils.c parsing/parse_utils.c parsing/cone.c parsing/light.c\
+	parsing/cylinder.c  parsing/sphere.c parsing/material.c parsing/parse.c   parsing/plane.c \
+	parsing/camera.c rendring/canvas.c\
+	rendring/intersect_obj.c rendring/intersect_world.c rendring/compute_vectors.c\
+	rendring/paint_pixel.c rendring/compute_light.c rendring/patterns.c rendring/render_scene.c\
+	
 
 OFILES = $(CFILES:%.c=%.o)
 

@@ -1,4 +1,4 @@
-#include "minirt.h"
+#include "../minirt.h"
 
 t_intersections  intersect_each(t_ray r, t_object *obj)
 {

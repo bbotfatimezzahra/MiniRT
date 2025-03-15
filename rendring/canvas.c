@@ -1,4 +1,4 @@
-#include "minirt.h"
+#include "../minirt.h"
 
 unsigned long rgb_to_hex(t_color c)
 {
@@ -88,7 +88,7 @@ void	start_display(t_mini *rt)
 	if (!rt->img)
 		terminate(ERR_IMG, rt);
 	rt->addr = mlx_get_data_addr(rt->img, &rt->bpp, l_length, endian);
-	render_a_scene(rt);
+  render_scene(rt);
 	printf("\nDONE\n");
 	mlx_put_image_to_window(rt->con, rt->win, rt->img, 0, 0);
 	mlx_hook(rt->win, 2, 1L << 0, key_hook, rt);

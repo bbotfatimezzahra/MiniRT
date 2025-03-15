@@ -1,4 +1,4 @@
-#include "minirt.h"
+#include "../minirt.h"
 
 void	ft_putstr_fd(char *s, int fd)
 {

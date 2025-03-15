@@ -1,4 +1,4 @@
-#include "minirt.h"
+#include "../minirt.h"
 
 t_compute prepare(t_intersections xs, t_ray ray)
 {

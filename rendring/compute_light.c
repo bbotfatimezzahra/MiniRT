@@ -1,4 +1,4 @@
-#include "minirt.h"
+#include "../minirt.h"
 
 t_color reflect_color(t_compute cmp, t_scene s, int reflect_recur_checker)
 {

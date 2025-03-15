@@ -1,4 +1,4 @@
-#include "minirt.h"
+#include "../minirt.h"
 
 t_vector	ve_camera(t_ray ray)
 {

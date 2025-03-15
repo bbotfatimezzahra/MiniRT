@@ -1,4 +1,4 @@
-#include "minirt.h"
+#include "../minirt.h"
 
 t_ray	ray_create(t_tuple origin, t_tuple direction)
 {

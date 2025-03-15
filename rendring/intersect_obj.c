@@ -1,4 +1,4 @@
-#include "minirt.h"
+#include "../minirt.h"
 
 
 static void  cy_util(t_intersections *xs, double c, t_ray ray, t_object *cy);

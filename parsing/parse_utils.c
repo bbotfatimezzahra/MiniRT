@@ -1,4 +1,4 @@
-#include "minirt.h"
+#include "../minirt.h"
 
 int	ft_isalpha(int c)
 {

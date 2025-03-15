@@ -1,4 +1,4 @@
-#include "minirt.h"
+#include "../minirt.h"
 
 
 t_ray ray_for_pixel(t_camera c, int px, int py)
@@ -20,7 +20,7 @@ t_ray ray_for_pixel(t_camera c, int px, int py)
   return (r);
 }
 
-void  render_a_scene(t_mini *mini)
+void  render_scene(t_mini *mini)
 {
   int i;
   int j;

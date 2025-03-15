@@ -1,4 +1,4 @@
-#include "minirt.h"
+#include "../minirt.h"
 
 t_matrix ma_tu_fill(t_tuple r1, t_tuple r2, t_tuple r3, t_tuple r4)
 {

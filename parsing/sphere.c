@@ -1,4 +1,4 @@
-#include "minirt.h"
+#include "../minirt.h"
 
 t_object	*sp_create(t_mini *rt)
 {

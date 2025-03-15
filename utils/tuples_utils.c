@@ -1,4 +1,4 @@
-#include "minirt.h"
+#include "../minirt.h"
 
 t_tuple	tu_add(t_tuple t1, t_tuple t2)
 {
