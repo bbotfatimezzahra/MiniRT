@@ -55,6 +55,8 @@ void	am_create(char *str, t_mini *rt)
 		free_double(rt->parse_infos);
 		rt->parse_infos = NULL;
 	}
+	else
+		terminate("Incorrect scene file",rt);
 	printf("ambient\n");
 }
 
@@ -92,16 +94,16 @@ t_color	lighting(t_scene scene, t_compute cmp, t_light light, bool shade)
 	t_color	ef_color;
 	t_vector	lightv;
 	t_color	ambient;
-  t_color color;
+	t_color color;
 
-  color = cmp.obj->material.color;
-  if (cmp.obj->material.pattern.enable == true)
-    color = pattern_obj(cmp.obj->material.pattern, *cmp.obj, cmp.point);
+	color = cmp.obj->material.color;
+	if (cmp.obj->material.pattern.enable == true)
+		color = pattern_obj(cmp.obj->material.pattern, *cmp.obj, cmp.point);
 	ef_color = tu_multiply(color, light.intensity);
 	ambient = tu_multiply(ef_color, *scene.ambient);
-  if (shade)
-    return (ambient);
-  /*print_tuple(ambient);*/
+	if (shade)
+		return (ambient);
+	/*print_tuple(ambient);*/
 	lightv = tu_normalize(tu_subtract(light.position, cmp.point));
 	return (tu_add(light_calc(lightv, cmp, ef_color, light), ambient));
 }

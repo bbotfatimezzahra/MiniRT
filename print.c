@@ -36,10 +36,26 @@ void	print_ray(t_ray r)
 	print_tuple(r.direction);
 }
 
+void	print_material(t_material ma)
+{
+	printf("	material : spec : %.1f refl : %.1f shine : %.1f pattern : ", ma.specular, ma.reflective, ma.shininess);
+	if (ma.pattern.type == NONE)
+		printf("NONE ");
+	else if (ma.pattern.type == CHECKER)
+		printf("CHECKERBOARD ");
+	else if (ma.pattern.type == STRIPE)
+		printf("STRIPE ");
+	else if (ma.pattern.type == RING)
+		printf("RING ");
+	else if (ma.pattern.type == GRADIENT)
+		printf("GRADIENT ");
+	printf("color : ");
+	print_tuple(ma.color);
+}
+
 void	print_scene(t_mini rt)
 {
 	int	i;
-	t_material	material;
 
 	printf("**************************************************\n");
 	printf("		 ****Scene****\n");
@@ -77,9 +93,7 @@ void	print_scene(t_mini rt)
 		else
 			printf("ELSE\n");
 		printf("	obj : %p\n", rt.scene.objs[i]->obj);
-		printf("	material : color ");
-		material = rt.scene.objs[i]->material;
-		print_tuple(material.color);
+		print_material(rt.scene.objs[i]->material);
 		printf("	transform : ");
 		print_matrix(rt.scene.objs[i]->transform);
 		printf("--------------------------\n");

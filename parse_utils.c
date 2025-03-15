@@ -41,6 +41,8 @@ void	check_vector(t_tuple tuple, int type, t_mini *rt)
 	double	min;
 	double	max;
 
+	if (!tuple.x && !tuple.y && !tuple.z)
+		terminate("Incorrect scene file", rt);
 	if (type == 0)
 	{
 		min = -1;
@@ -56,7 +58,7 @@ void	check_vector(t_tuple tuple, int type, t_mini *rt)
 	if (tuple.x < min || tuple.x > max
 		|| tuple.y < min || tuple.y > max
 		|| tuple.z < min || tuple.z > max)
-		terminate("Incorrect scene file 1", rt);
+		terminate("Incorrect scene file", rt);
 }
 
 t_tuple	tu_parse(char *str, int type, t_mini *rt)
@@ -89,8 +91,9 @@ double	check_ratio(double value, int type, t_mini *rt)
 	if (type == 2)
 		return (value);
 	if (value < 0 || (type  == 0 && value > 1)
-			|| (type == 1 && value > 180))
-		terminate("Incorrect scene file 2", rt);
+			|| (type == 1 && value > 180)
+			|| (type == 3 && value > 200))
+		terminate("Incorrect scene file", rt);
 	if (type == 1)
 		value = value * PI / 180;
 	return (value);

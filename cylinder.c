@@ -32,7 +32,7 @@ void	cy_parse(char *str, t_mini *rt)
 
 	rt->parse_infos = ft_split(str, ' ', &length);
 	infos = rt->parse_infos;
-	if (length != 6 || ft_strncmp(infos[0], "cy", 3))
+	if (length < 6 || ft_strncmp(infos[0], "cy", 3))
 		terminate("Incorrect scene file\n", rt);
 	obj = cy_create(rt);
 	rt->scene.objs[rt->scene.count++] = obj;
@@ -43,6 +43,8 @@ void	cy_parse(char *str, t_mini *rt)
 	obj->transform = ma_multiply(ma_translate(tu_parse(infos[1], 1, rt))
                               , obj->transform);
 	obj->material = m_create(tu_parse(infos[5], 2, rt));
+	if (length > 6)
+		obj->material = m_parse(rt, obj->material, 6);
 	obj->id = rt->scene.count;
 	free_double(rt->parse_infos);
 	rt->parse_infos = NULL;

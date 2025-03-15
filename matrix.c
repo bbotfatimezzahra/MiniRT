@@ -56,7 +56,7 @@ t_matrix	ma_multiply(t_matrix m1, t_matrix m2)
 	int	k;
 
 	if (m1.cols != m2.rows)
-		return (printf("ERROR\n"), r);
+		return (printf("MULTIPLY===========\n"),print_matrix(m1), print_matrix(m2),printf("ERROR\n"), r);
 	r = ma_create(fmin(m1.rows ,m2.rows), fmin(m1.cols ,m2.cols), NULL);
 	i = -1;
 	while (++i < r.rows)
@@ -177,7 +177,7 @@ t_tuple	ma_tu_multiply(t_matrix m, t_tuple t)
 	double	a[4];
 
 	if (m.cols != 4)
-		return (printf("ERROR\n"), r);
+		return (printf("TUPLE MATRIX MULTIPLY===========\n"),print_matrix(m), print_tuple(t),printf("ERROR\n"), r);
 	i = -1;
 	while (++i < 4)
 	{

@@ -28,8 +28,8 @@
 # define GREEN 0x0000FF00
 # define RED 0xFF000000
 
-# define DIS_WIDTH 200
-# define DIS_LENGTH 200
+# define DIS_WIDTH 500
+# define DIS_LENGTH 500
 # define VECTOR 0
 # define POINT 1
 # define COLOR 2
@@ -43,7 +43,8 @@
 
 typedef enum  e_pattern_type
 {
-  STRIP,
+	NONE,
+  STRIPE,
   GRADIENT,
   RING,
   CHECKER
@@ -78,7 +79,7 @@ typedef struct s_pattern
 {
   bool enable;
   t_pattern_type type; 
-  t_matrix transformation;
+  t_matrix transform;
   t_color a;
   t_color b;
 } t_pattern;
@@ -274,7 +275,7 @@ t_color pattern_obj(t_pattern pat, t_object obj, t_point point);
 t_color ring_pattern(t_pattern pat, t_point point);
 t_color gradient_pattern(t_pattern pat, t_point point);
 t_color strip_pattern(t_pattern pat, t_point point);
-t_pattern new_pattern(t_color a, t_color b, t_pattern_type type);
+t_pattern new_pattern(void);
 
 //------------------------------- Render scene ------------------------------------
 
@@ -302,6 +303,7 @@ void	ca_create(char *str, t_mini *rt);
 void	pl_parse(char *str, t_mini *rt);
 t_tuple	tu_parse(char *str, int type, t_mini *rt);
 double	check_ratio(double value, int type, t_mini *rt);
+t_material	m_parse(t_mini *rt, t_material ma, int i);
 
 void	terminate(char *error, t_mini *rt);
 

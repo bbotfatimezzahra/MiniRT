@@ -28,11 +28,7 @@ t_color color_at(t_scene s, t_ray r, int reflect_recur_checker)
 
   xs_world = intersect_world(s, r);
   if (xs_world.count <= 0 || hit(xs_world).t < EPS)
-  {
-	  if (hit(xs_world).object->type == CONE)
-		  printf("hello\n");
     return (tu_create(0, 0, 0, COLOR));
-  }
   cmp = prepare(xs_world, r);
   return (shade_hit(s, cmp, reflect_recur_checker));
 }

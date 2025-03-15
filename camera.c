@@ -92,4 +92,6 @@ void	ca_create(char *str, t_mini *rt)
 		free_double(rt->parse_infos);
 		rt->parse_infos = NULL;
 	}
+	else
+		terminate("Incorrect scene file",rt);
 }
