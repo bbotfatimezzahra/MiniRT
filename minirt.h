@@ -28,8 +28,8 @@
 # define GREEN 0x0000FF00
 # define RED 0xFF000000
 
-# define DIS_WIDTH 500
-# define DIS_LENGTH 500
+# define DIS_WIDTH 1000
+# define DIS_LENGTH 1000
 # define VECTOR 0
 # define POINT 1
 # define COLOR 2
@@ -92,7 +92,6 @@ typedef struct s_material
 	double	specular;
 	double	shininess;
 	double reflective;
-	double transparency;
 }	t_material;
 
 typedef struct s_sphere
@@ -262,10 +261,9 @@ t_compute prepare(t_intersections xs, t_ray ray);
 //------------------ lighting , shading, reflection, refraction ------------------
 
 t_color         shade_hit(t_scene, t_compute cmp, int reflect_recur_checker);
-bool            pixel_is_shadow(t_scene s, t_tuple above_point);
+bool            pixel_is_shadow(t_scene s, t_tuple above_point, int i);
 t_color color_at(t_scene s, t_ray r, int reflect_recur_checker);
 t_color reflect_color(t_compute cmp, t_scene s, int reflect_recur_checker);
-t_color refracted_color(t_scene s, t_compute cmp, int recursive_limit);
 unsigned long rgb_to_hex(t_color c);
 t_color	lighting(t_scene s, t_compute cmp, t_light light, bool shade);
 

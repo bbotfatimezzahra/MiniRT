@@ -35,25 +35,5 @@ int	main(int argc, char **argv)
 	parse_file(argv[1], &rt);
 	print_scene(rt);
 	start_display(&rt);
-/*	t_intersections	xs;
-	xs = co_intersect(co_create(&rt), ray_create(tu_create(0,0,-5,1),tu_normalize(tu_create(0,1,0,0))), xs);
-			printf("count : %d   | t0 = %.5f   t1 = %.5f\n", xs.count, xs.inter[0].t, xs.inter[1].t);
-			xs.count = 0;
-	xs = co_intersect(co_create(&rt), ray_create(tu_create(0,0,-0.25,1),tu_normalize(tu_create(0,1,1,0))), xs);
-			printf("count : %d   | t0 = %.5f   t1 = %.5f\n", xs.count, xs.inter[0].t, xs.inter[1].t);
-			xs.count = 0;
-	xs = co_intersect(co_create(&rt), ray_create(tu_create(0,0,-0.25,1),tu_normalize(tu_create(0,1,0,0))), xs);
-			printf("count : %d   | t0 = %.5f   t1 = %.5f\n", xs.count, xs.inter[0].t, xs.inter[1].t);
-				xs.count = 0;
-	xs = co_intersect(co_create(&rt), ray_create(tu_create(0,0,-1,1),tu_normalize(tu_create(0,1,1,0))), xs);
-			printf("count : %d   | t0 = %.5f   t1 = %.5f\n", xs.count, xs.inter[0].t, xs.inter[1].t);
-			printf("===================================\n");
-			t_vector w;
-			t_vector obj_n;
-			w = tu_create(0,0,0,0);
-			ve_co_normal(tu_create(0,0,0,1), &w, obj_n, *co_create(&rt));
-			ve_co_normal(tu_create(1,1,1,1), &w, obj_n, *co_create(&rt));
-			ve_co_normal(tu_create(-1,-1,0,1), &w, obj_n, *co_create(&rt));
-			*/
 	return (0);
 }

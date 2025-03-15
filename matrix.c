@@ -138,7 +138,6 @@ double	ma_cofactor(t_matrix m, int row, int col)
 {
 	double	cof;
 
-  /*printf("hi\n\n\n");*/
 	cof = ma_determinant(ma_submatrix(m, row, col));
 	if ((row + col) % 2 == 1)
 		cof *= -1;
@@ -153,8 +152,8 @@ t_matrix	ma_invert(t_matrix m)
 	int	j;
 
 	det = ma_determinant(m);
-	/*if (!det)*/
-	/*	return (m);*/
+	if (!det)
+		return (m);
 	r = ma_create(m.rows, m.cols, NULL);
 	i = -1;
 	while (++i < m.rows)

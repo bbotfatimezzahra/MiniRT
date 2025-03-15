@@ -69,17 +69,6 @@ float	limit_value(float color)
 	return (value);
 }
 
-int	convert_color(t_color rgb)
-{
-	int	color;
-
-	color = limit_value(rgb.x);
-	color = (color << 8) +  limit_value(rgb.y);
-	color = (color << 8) +  limit_value(rgb.z);
-	printf("%d\n",color);
-	return (color);
-}
-
 void	start_display(t_mini *rt)
 {
 	int		*l_length;

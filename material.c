@@ -7,10 +7,9 @@ t_material	m_create(t_tuple color)
 	ma.color = color;
 	ma.pattern = new_pattern();
 	ma.diffuse = 0.9;
-	ma.specular = 0.9;
+	ma.specular = 0.7;
 	ma.reflective = 0;  
 	ma.shininess = 200;
-	ma.transparency = 1;
 	return (ma);
 }
 

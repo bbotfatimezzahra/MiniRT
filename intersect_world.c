@@ -1,8 +1,5 @@
 #include "minirt.h"
 
-
-/*static void bubble_sort(t_intersections *xs);*/
-
 t_intersections  intersect_each(t_ray r, t_object *obj)
 {
   t_ray transformed_ray;
@@ -29,6 +26,7 @@ t_intersect	hit(t_intersections xs)
 	t_intersect	hit;
 
 	hit.t = -1;
+  hit.object = NULL;
 	if (!xs.count)
 		return (hit);
 	i = xs.count - 1;
@@ -40,35 +38,6 @@ t_intersect	hit(t_intersections xs)
 	}
 	return (hit);
 }
-
-/*static void bubble_sort(t_intersections *xs)*/
-/*{*/
-/*  int i;*/
-/*  int j;*/
-/*  bool swapped;*/
-/*  t_intersect tmp;*/
-/**/
-/*  i = 0;*/
-/*  while(i < xs->count)*/
-/*  {*/
-/*    j = 0;*/
-/*    swapped = false;*/
-/*    while(j < xs->count - i)*/
-/*    {*/
-/*      if (xs->inter[j + 1].t < xs->inter[j].t)      */
-/*      {*/
-/*        swapped = true;*/
-/*        tmp = xs->inter[j];*/
-/*        xs->inter[j] = xs->inter[j + 1];  */
-/*        xs->inter[j + 1] = tmp; */
-/*      }*/
-/*      j++;*/
-/*    }*/
-/*    if (swapped == false)*/
-/*      break;*/
-/*    i++;*/
-/*  }*/
-/*}*/
 
 t_intersections  intersect_world(t_scene s, t_ray r)
 {
@@ -95,7 +64,6 @@ t_intersections  intersect_world(t_scene s, t_ray r)
     }
     i++;
   }
-  /*bubble_sort(&world_xs);*/
   return (world_xs);
 }
 

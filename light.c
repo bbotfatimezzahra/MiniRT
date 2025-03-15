@@ -101,9 +101,8 @@ t_color	lighting(t_scene scene, t_compute cmp, t_light light, bool shade)
 		color = pattern_obj(cmp.obj->material.pattern, *cmp.obj, cmp.point);
 	ef_color = tu_multiply(color, light.intensity);
 	ambient = tu_multiply(ef_color, *scene.ambient);
-	if (shade)
-		return (ambient);
-	/*print_tuple(ambient);*/
+  if (shade)
+    return (ambient);
 	lightv = tu_normalize(tu_subtract(light.position, cmp.point));
 	return (tu_add(light_calc(lightv, cmp, ef_color, light), ambient));
 }

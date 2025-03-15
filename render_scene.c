@@ -1,7 +1,6 @@
 #include "minirt.h"
 
 
-// don't forget here we are assiming that our camera is in (0, 0, -1) so it's understoodk
 t_ray ray_for_pixel(t_camera c, int px, int py)
 {
   double xoffset;
