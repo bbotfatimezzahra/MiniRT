@@ -101,7 +101,6 @@ t_color	lighting(t_scene scene, t_compute cmp, t_light light, bool shade)
 	ambient = tu_multiply(ef_color, *scene.ambient);
   if (shade)
     return (ambient);
-  /*print_tuple(ambient);*/
 	lightv = tu_normalize(tu_subtract(light.position, cmp.point));
 	return (tu_add(light_calc(lightv, cmp, ef_color, light), ambient));
 }
