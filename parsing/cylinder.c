@@ -6,7 +6,7 @@
 /*   By: fbbot <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 12:47:54 by fbbot             #+#    #+#             */
-/*   Updated: 2025/03/16 15:24:05 by fbbot            ###   ########.fr       */
+/*   Updated: 2025/03/16 16:50:40 by fbbot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,4 @@ void	cy_parse(char *str, t_mini *rt)
 		obj->material = m_parse(rt, obj->material, length, 6);
 	obj->id = rt->scene.count;
 	free_double(&rt->parse_infos);
-	printf("Cylinder\n");
 }

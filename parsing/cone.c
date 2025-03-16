@@ -6,7 +6,7 @@
 /*   By: fbbot <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 12:47:19 by fbbot             #+#    #+#             */
-/*   Updated: 2025/03/16 15:24:05 by fbbot            ###   ########.fr       */
+/*   Updated: 2025/03/16 16:50:39 by fbbot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	co_parse(char *str, t_mini *rt)
 	int			length;
 	double		a;
 
-	printf("Cone\n");
 	rt->parse_infos = ft_split(str, ' ', &length);
 	if (!rt->parse_infos)
 		terminate(ERR_MALLOC, rt);
