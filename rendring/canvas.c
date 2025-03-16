@@ -1,15 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   canvas.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: snidbell <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/16 02:48:58 by snidbell          #+#    #+#             */
+/*   Updated: 2025/03/16 02:51:36 by snidbell         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minirt.h"
 
-unsigned long rgb_to_hex(t_color c)
+unsigned long	rgb_to_hex(t_color c)
 {
-    int red = round(c.x * 255);
-    int green = round(c.y * 255);
-    int blue = round(c.z * 255);
-    red = (red < 0) ? 0 : (red > 255) ? 255 : red;
-    green = (green < 0) ? 0 : (green > 255) ? 255 : green;
-    blue = (blue < 0) ? 0 : (blue > 255) ? 255 : blue;
+	int	red;
+	int	green;
+	int	blue;
 
-    return ((unsigned long)(red & 0xff) << 16) | ((unsigned long)(green & 0xff) << 8) | (blue & 0xff);
+	red = round(c.x * 255);
+	green = round(c.y * 255);
+	blue = round(c.z * 255);
+	red = (red < 0) ? 0 : (red > 255) ? 255 : red;
+	green = (green < 0) ? 0 : (green > 255) ? 255 : green;
+	blue = (blue < 0) ? 0 : (blue > 255) ? 255 : blue;
+	return ((unsigned long)(red & 0xff) << 16) | ((unsigned long)(green & 0xff) << 8) | (blue & 0xff);
 }
 
 void	put_pixel(t_mini *rt, int x, int y, int color)
