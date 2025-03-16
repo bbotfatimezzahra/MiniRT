@@ -9,8 +9,8 @@ CFILES = main.c\
 	parsing/cylinder.c  parsing/sphere.c parsing/material.c parsing/parse.c   parsing/plane.c \
 	parsing/camera.c rendring/canvas.c\
 	rendring/intersect_obj.c rendring/intersect_world.c rendring/compute_vectors.c\
-	rendring/paint_pixel.c rendring/compute_light.c rendring/patterns.c rendring/render_scene.c\
-	
+	rendring/paint_pixel.c rendring/compute_light.c rendring/patterns.c\
+	rendring/color_utils.c rendring/render_scene.c rendring/intersect_utils.c	
 
 OFILES = $(CFILES:%.c=%.o)
 

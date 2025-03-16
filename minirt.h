@@ -179,7 +179,7 @@ typedef struct s_compute
   bool  inside;
   t_intersect xs;
   t_point under_point;
-  t_point above_point; // it for the "acne shadow" case
+  t_point above_point;
 } t_compute;
 
 typedef struct s_mini
@@ -247,6 +247,10 @@ t_intersections co_intersect(t_object *co, t_ray ray, t_intersections xs);
 t_intersections w_intersect(t_scene scene, t_ray ray);
 t_intersect     hit(t_intersections inter);
 t_intersections intersect_world(t_scene s, t_ray r);
+t_intersections	check_cycaps(t_object *cy, t_ray ray, t_intersections xs);
+void	c_util(t_intersections *xs, double c, t_ray ray, t_object *obj);
+t_intersections	check_cocaps(t_object *co, t_ray ray, t_intersections xs);
+void	calc_factors(t_ray ray, double *a, double *b, double *c);
 
 //------------------------- compute lighting utils ------------------------------
 
@@ -261,8 +265,8 @@ t_compute prepare(t_intersections xs, t_ray ray);
 t_color         shade_hit(t_scene, t_compute cmp, int reflect_recur_checker);
 bool            pixel_is_shadow(t_scene s, t_tuple above_point, int i);
 t_color color_at(t_scene s, t_ray r, int reflect_recur_checker);
-t_color	reflect_color(t_compute cmp, t_scene s, int reflect_recur_checker);
-unsigned long rgb_to_hex(t_color c);
+t_color reflect_color(t_compute cmp, t_scene s, int reflect_recur_checker);
+long  rgb_to_hex(t_color c);
 t_color	lighting(t_scene s, t_compute cmp, t_light light, bool shade);
 
 //-------------------------------- Patterns --------------------------------------

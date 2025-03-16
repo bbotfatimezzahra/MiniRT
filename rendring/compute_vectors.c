@@ -12,16 +12,6 @@
 
 #include "../minirt.h"
 
-t_vector	ve_camera(t_ray ray)
-{
-	return (tu_scale(ray.direction, -1));
-}
-
-t_vector	ve_light(t_point o_pos, t_point l_pos)
-{
-	return (tu_subtract(l_pos, o_pos));
-}
-
 t_tuple	ve_normal_at(t_object *obj, t_tuple point)
 {
 	t_tuple	object_point;
