@@ -20,7 +20,7 @@ t_object	*cy_create(t_mini *rt)
 	obj->material = m_create(tu_create(1,1,1,2));
 	obj->transform = ma_identity(4);
 	obj->obj = cy;
-	return(obj);
+	return (obj);
 }
 
 void	cy_parse(char *str, t_mini *rt)
@@ -37,11 +37,12 @@ void	cy_parse(char *str, t_mini *rt)
 	obj = cy_create(rt);
 	rt->scene.objs[rt->scene.count++] = obj;
 	a = ft_atod(infos[3], rt, 0) / 2;
-	obj->transform = rodrigues_formula(tu_parse(infos[2], 0, rt), tu_create(0, 1, 0, VECTOR));
-	obj->transform = ma_multiply(ma_scale(tu_create(a, ft_atod(infos[4], rt, 0), a, 1))
-                              , obj->transform);
+	obj->transform = rodrigues_formula(tu_parse(infos[2], 0, rt), 
+			tu_create(0, 1, 0, VECTOR));
+	obj->transform = ma_multiply(ma_scale(tu_create(a, 
+				ft_atod(infos[4], rt, 0), a, 1)), obj->transform);
 	obj->transform = ma_multiply(ma_translate(tu_parse(infos[1], 1, rt))
-                              , obj->transform);
+			, obj->transform);
 	obj->material = m_create(tu_parse(infos[5], 2, rt));
 	if (length > 6)
 		obj->material = m_parse(rt, obj->material, length, 6);

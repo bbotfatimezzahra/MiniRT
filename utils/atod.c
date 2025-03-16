@@ -61,8 +61,8 @@ double	ft_atod(char *str, t_mini *rt, int a)
 	{
 		result = (result * 10) + (str[i++] - '0');
 		if (((result > DBL_MAX) && sign == 1)
-			|| ((result * -1 > DBL_MIN) && sign == -1))
-		terminate("Incorrect values", rt);
+				|| ((result * -1 > DBL_MIN) && sign == -1))
+			terminate("Incorrect values", rt);
 	}
 	return (float_point(result, &str[i]) * sign);
 }

@@ -12,6 +12,21 @@
 
 #include "../minirt.h"
 
+int	ft_isalpha(int c)
+{
+	if ((c < 'a' || c > 'z') && (c < 'A' || c > 'Z'))
+		return (0);
+	return (1);
+}
+
+int	ft_isdigit(int c)
+{
+	if ((c < '0' || c > '9') && c != '-')
+		return (0);
+	return (1);
+}
+
+
 void	ft_bzero(void *s, size_t n)
 {
 	size_t	i;

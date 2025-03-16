@@ -20,7 +20,7 @@ t_object	*co_create(t_mini *rt)
 	obj->material = m_create(tu_create(1,1,1,2));
 	obj->transform = ma_identity(4);
 	obj->obj = co;
-	return(obj);
+	return (obj);
 }
 
 void	co_parse(char *str, t_mini *rt)
@@ -38,9 +38,10 @@ void	co_parse(char *str, t_mini *rt)
 	obj = co_create(rt);
 	rt->scene.objs[rt->scene.count++] = obj;
 	a = ft_atod(infos[3], rt, 0) / 2;
-	obj->transform = rodrigues_formula(tu_parse(infos[2], 0, rt), tu_create(0, 1, 0, VECTOR));
-	obj->transform = ma_multiply(ma_scale(tu_create(a, ft_atod(infos[4], rt, 0), a, 1))
-			, obj->transform);
+	obj->transform = rodrigues_formula(tu_parse(infos[2], 0, rt), 
+			tu_create(0, 1, 0, VECTOR));
+	obj->transform = ma_multiply(ma_scale(tu_create(a, 
+				ft_atod(infos[4], rt, 0), a, 1)), obj->transform);
 	obj->transform = ma_multiply(ma_translate(tu_parse(infos[1], 1, rt))
 			, obj->transform);
 	obj->material = m_create(tu_parse(infos[5], 2, rt));
@@ -102,7 +103,8 @@ t_intersections	co_intersect(t_object *co, t_ray ray, t_intersections xs)
 	double	disc;
 
 	a = pow(ray.direction.x, 2) - pow(ray.direction.y, 2) + pow(ray.direction.z, 2);
-	b = 2 * ray.origin.x * ray.direction.x - 2 * ray.origin.y * ray.direction.y + 2 * ray.origin.z * ray.direction.z;
+	b = 2 * ray.origin.x * ray.direction.x - 2 * ray.origin.y * ray.direction.y +
+		2 * ray.origin.z * ray.direction.z;
 	c = pow(ray.origin.x, 2) - pow(ray.origin.y, 2) + pow(ray.origin.z, 2);
 	if (fabs(a) < EPS && fabs(b) < EPS )
 		return (xs);

@@ -14,8 +14,8 @@ t_tuple	tu_create(double x, double y, double z, int w)
 int tu_compare(t_tuple t1, t_tuple t2)
 {
 	if (fabs(t1.x - t2.x) < EPS
-		&& fabs(t1.y - t2.y) < EPS
-		&& fabs(t1.z - t2.z) < EPS)
+			&& fabs(t1.y - t2.y) < EPS
+			&& fabs(t1.z - t2.z) < EPS)
 		return (1);
 	return (0);
 }
@@ -53,8 +53,8 @@ t_tuple	tu_normalize(t_tuple t1)
 	double	magn;
 
 	magn = tu_magnitude(t1);
-  if (magn == 0)
-    return (t1);
+	if (magn == 0)
+		return (t1);
 	norm.x = t1.x / magn;
 	norm.y = t1.y / magn;
 	norm.z = t1.z / magn;
@@ -62,12 +62,11 @@ t_tuple	tu_normalize(t_tuple t1)
 	return (norm);
 }
 
-
+//
 t_tuple tu_negate(t_tuple t)
 {
-  return (tu_create(-t.x,
-                    -t.y,
-                    -t.z,
-                    -t.w));
+	return (tu_create(-t.x,
+				-t.y,
+				-t.z,
+				-t.w));
 }
-

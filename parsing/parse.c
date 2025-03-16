@@ -35,18 +35,16 @@ void	check_elems(t_mini *rt, int *obj, int *light)
 		while (!c[++j])
 		{
 			if(!ft_isdigit(c[j]) && c[j] != 32 && c[j] != ',' 
-				&& c[j] != '.' && c[j] != '-')
+					&& c[j] != '.' && c[j] != '-')
 				terminate("Scene file check error", rt);
 		}
 	}
 }
 
-void	fill_scene(t_mini *rt)
+void	fill_scene(t_mini *rt, char **elems)
 {
-	char	**elems;
 	int	i;
 
-	elems = rt->parse_elems;
 	i = -1;
 	while (elems[++i])
 	{
@@ -90,7 +88,7 @@ void	create_scene(t_mini *rt)
 	rt->scene.objs = ft_calloc(obj, sizeof(t_object *));
 	if (!rt->scene.objs)
 		terminate(ERR_MALLOC, rt);
-	fill_scene(rt);
+	fill_scene(rt, rt->parse_elems);
 	if (!rt->scene.light || !rt->scene.ambient|| !rt->scene.camera)
 		terminate("Scene file elements error 2",rt);
 	free(rt->parse_str);

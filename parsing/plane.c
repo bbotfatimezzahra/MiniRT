@@ -39,9 +39,10 @@ void	pl_parse(char *str, t_mini *rt)
 		terminate("Incorrect scene file\n", rt);
 	obj = pl_create(rt);
 	rt->scene.objs[rt->scene.count++] = obj;
-	obj->transform = rodrigues_formula(tu_normalize(tu_parse(infos[2], 0, rt)), tu_create(0, 1, 0, 0));
-  obj->transform = ma_multiply(ma_translate(tu_parse(infos[1], 1, rt))
-                               , obj->transform);
+	obj->transform = rodrigues_formula(tu_normalize(tu_parse(infos[2], 0, rt)),
+			tu_create(0, 1, 0, 0));
+	obj->transform = ma_multiply(ma_translate(tu_parse(infos[1], 1, rt))
+			, obj->transform);
 	obj->material = m_create(tu_parse(infos[3], 2, rt));
 	if (length > 4)
 		obj->material = m_parse(rt, obj->material, length, 4);

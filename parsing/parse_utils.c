@@ -1,19 +1,5 @@
 #include "../minirt.h"
 
-int	ft_isalpha(int c)
-{
-	if ((c < 'a' || c > 'z') && (c < 'A' || c > 'Z'))
-		return (0);
-	return (1);
-}
-
-int	ft_isdigit(int c)
-{
-	if ((c < '0' || c > '9') && c != '-')
-		return (0);
-	return (1);
-}
-
 int	ft_isfloat(char *str, int vector)
 {
 	int	i;
@@ -56,8 +42,8 @@ void	check_vector(t_tuple tuple, int type, t_mini *rt)
 	else
 		return;
 	if (tuple.x < min || tuple.x > max
-		|| tuple.y < min || tuple.y > max
-		|| tuple.z < min || tuple.z > max)
+			|| tuple.y < min || tuple.y > max
+			|| tuple.z < min || tuple.z > max)
 		terminate("Incorrect scene file", rt);
 }
 

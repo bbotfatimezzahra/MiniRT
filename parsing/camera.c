@@ -10,62 +10,61 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minirt.h"
+# include "../minirt.h"
 
 static t_vector  find_non_parallel_ve(t_vector v);
 
-t_matrix view_transform(t_point from, t_vector orientation)
+t_matrix view_transform(t_point from, t_vector orient)
 {
-    t_vector forward;
-    t_vector left;
-    t_vector normalize_up;
-    t_vector real_up;
-    t_matrix orientation_matrix;
-    
-    forward = tu_normalize(orientation);
-    normalize_up = tu_normalize(find_non_parallel_ve(orientation));
-  left = tu_cross(forward, normalize_up);
-    left = tu_normalize(left);
-    real_up = tu_cross(left, forward);
-    orientation_matrix = ma_tu_fill(left, real_up, tu_negate(forward), tu_create(0, 0, 0, POINT));
-    return (ma_multiply(orientation_matrix, ma_translate(tu_create(-from.x, -from.y, -from.z, 0))));
+	t_vector forward;
+	t_vector left;
+	t_vector normalize_up;
+	t_vector real_up;
+	t_matrix orient_mat;
+
+	forward = tu_normalize(orient);
+	normalize_up = tu_normalize(find_non_parallel_ve(orient));
+	left = tu_cross(forward, normalize_up);
+	left = tu_normalize(left);
+	real_up = tu_cross(left, forward);
+	orient_mat = ma_tu_fill(left, real_up, tu_negate(forward), 
+			tu_create(0, 0, 0, POINT));
+	return (ma_multiply(orient_mat, 
+			ma_translate(tu_create(-from.x, -from.y, -from.z, 0))));
 }
 
 t_camera  set_camera(double hsize, double vsize, double fov)
 {
-  double half_view;
-  float aspect;
-  t_camera  c;
-  // here we just use a sample trigonometry calcul here because we set the field of view
-  // one unit so half_view/1 == half_view
-  c.horizontal_size = hsize;
-  c.vertical_size = vsize;
-  c.transform = ma_identity(4);
-  half_view = tan(fov / 2);
-  aspect = hsize / vsize;
-  // half width and half height is how mutch unit i am seeing the actual world
-  if (aspect >= 1)
-  {
-    c.half_width = half_view;
-    c.half_hight = c.half_width / aspect;
-  }
-  else
-  {
-    c.half_hight = half_view;
-    c.half_width = aspect * c.half_hight;
-  }
-  // this represents how mutch units fits in one pixel
-  c.pixel_size = (2 * c.half_width) / hsize;
-  return (c);
+	double	half_view;
+	float	aspect;
+	t_camera	c;
+
+	c.horizontal_size = hsize;
+	c.vertical_size = vsize;
+	c.transform = ma_identity(4);
+	half_view = tan(fov / 2);
+	aspect = hsize / vsize;
+	if (aspect >= 1)
+	{
+		c.half_width = half_view;
+		c.half_hight = c.half_width / aspect;
+	}
+	else
+	{
+		c.half_hight = half_view;
+		c.half_width = aspect * c.half_hight;
+	}
+	c.pixel_size = (2 * c.half_width) / hsize;
+	return (c);
 }
 
 static t_vector  find_non_parallel_ve(t_vector v)
 {
-  if (tu_magnitude(tu_cross(v, tu_create(0, 1, 0, VECTOR))) != 0)
-    return (tu_create(0, 1, 0, VECTOR));
-  if (tu_magnitude(tu_cross(v, tu_create(1, 0, 0, VECTOR))) != 0)
-    return (tu_create(0, 0, 1, VECTOR));   
-  return (tu_create(1, 0, 0, VECTOR));
+	if (tu_magnitude(tu_cross(v, tu_create(0, 1, 0, VECTOR))) != 0)
+		return (tu_create(0, 1, 0, VECTOR));
+	if (tu_magnitude(tu_cross(v, tu_create(1, 0, 0, VECTOR))) != 0)
+		return (tu_create(0, 0, 1, VECTOR));   
+	return (tu_create(1, 0, 0, VECTOR));
 }
 
 void	ca_create(char *str, t_mini *rt)
@@ -88,7 +87,7 @@ void	ca_create(char *str, t_mini *rt)
 		*camera = set_camera(DIS_WIDTH, DIS_LENGTH,
 				check_ratio(ft_atod(infos[3], rt, 0), 1, rt));
 		camera->transform = view_transform(tu_parse(infos[1], 
-				1, rt), tu_parse(infos[2], 0, rt));
+					1, rt), tu_parse(infos[2], 0, rt));
 		free_double(rt->parse_infos);
 		rt->parse_infos = NULL;
 	}

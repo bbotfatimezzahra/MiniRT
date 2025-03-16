@@ -36,7 +36,7 @@ void	sp_parse(char *str, t_mini *rt)
 	a = ft_atod(infos[2], rt, 0) / 2;
 	obj->transform = ma_scale(tu_create(a, a, a, 1));
 	obj->transform = ma_multiply(ma_translate(tu_parse(infos[1], 1, rt)),
-                              obj->transform);
+			obj->transform);
 	obj->material = m_create(tu_parse(infos[3], 2, rt));
 	if (length > 4)
 		obj->material = m_parse(rt, obj->material, length, 4);
