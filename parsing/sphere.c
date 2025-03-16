@@ -23,9 +23,9 @@ t_object	*sp_create(t_mini *rt)
 void	sp_parse(char *str, t_mini *rt)
 {
 	t_object	*obj;
-	char	**infos;
-	int	length;
-	double	a;
+	char		**infos;
+	int		length;
+	double		a;
 
 	rt->parse_infos = ft_split(str, ' ', &length);
 	infos = rt->parse_infos;

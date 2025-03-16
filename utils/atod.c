@@ -34,7 +34,6 @@ double	float_point(double num, char *str)
 		i++;
 	}
 	result = result * pow(10, -(i - 1));
-	printf("atod |%Lf| num |%f|\n",result, num);
 	return (num + result);
 }
 

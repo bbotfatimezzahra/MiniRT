@@ -10,33 +10,33 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../minirt.h"
+#include "../minirt.h"
 
-static t_vector  find_non_parallel_ve(t_vector v);
+static	t_vector	find_non_parallel_ve(t_vector v);
 
 t_matrix view_transform(t_point from, t_vector orient)
 {
-	t_vector forward;
-	t_vector left;
-	t_vector normalize_up;
-	t_vector real_up;
-	t_matrix orient_mat;
+	t_vector	forward;
+	t_vector	left;
+	t_vector	normalize_up;
+	t_vector	real_up;
+	t_matrix	orient_mat;
 
 	forward = tu_normalize(orient);
 	normalize_up = tu_normalize(find_non_parallel_ve(orient));
 	left = tu_cross(forward, normalize_up);
 	left = tu_normalize(left);
 	real_up = tu_cross(left, forward);
-	orient_mat = ma_tu_fill(left, real_up, tu_negate(forward), 
+	orient_mat = ma_tu_fill(left, real_up, tu_negate(forward),
 			tu_create(0, 0, 0, POINT));
-	return (ma_multiply(orient_mat, 
+	return (ma_multiply(orient_mat,
 			ma_translate(tu_create(-from.x, -from.y, -from.z, 0))));
 }
 
-t_camera  set_camera(double hsize, double vsize, double fov)
+t_camera	set_camera(double hsize, double vsize, double fov)
 {
-	double	half_view;
-	float	aspect;
+	double		half_view;
+	float		aspect;
 	t_camera	c;
 
 	c.horizontal_size = hsize;
@@ -58,20 +58,20 @@ t_camera  set_camera(double hsize, double vsize, double fov)
 	return (c);
 }
 
-static t_vector  find_non_parallel_ve(t_vector v)
+static	t_vector	find_non_parallel_ve(t_vector v)
 {
 	if (tu_magnitude(tu_cross(v, tu_create(0, 1, 0, VECTOR))) != 0)
 		return (tu_create(0, 1, 0, VECTOR));
 	if (tu_magnitude(tu_cross(v, tu_create(1, 0, 0, VECTOR))) != 0)
-		return (tu_create(0, 0, 1, VECTOR));   
+		return (tu_create(0, 0, 1, VECTOR));
 	return (tu_create(1, 0, 0, VECTOR));
 }
 
 void	ca_create(char *str, t_mini *rt)
 {
 	t_camera	*camera;
-	char	**infos;
-	int	length;
+	char		**infos;
+	int		length;
 
 	printf("Camera\n");
 	if (!rt->scene.camera)
@@ -86,11 +86,11 @@ void	ca_create(char *str, t_mini *rt)
 		rt->scene.camera = camera;
 		*camera = set_camera(DIS_WIDTH, DIS_LENGTH,
 				check_ratio(ft_atod(infos[3], rt, 0), 1, rt));
-		camera->transform = view_transform(tu_parse(infos[1], 
+		camera->transform = view_transform(tu_parse(infos[1],
 					1, rt), tu_parse(infos[2], 0, rt));
 		free_double(rt->parse_infos);
 		rt->parse_infos = NULL;
 	}
 	else
-		terminate("Incorrect scene file",rt);
+		terminate("Incorrect scene file", rt);
 }

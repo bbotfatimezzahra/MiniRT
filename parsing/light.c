@@ -16,7 +16,7 @@ void	li_create(char *str, t_mini *rt)
 {
 	t_light	*light;
 	char	**infos;
-	int	length;
+	int		length;
 
 	rt->parse_infos = ft_split(str, ' ', &length);
 	infos = rt->parse_infos;
@@ -44,24 +44,24 @@ void	am_create(char *str, t_mini *rt)
 	{
 		rt->parse_infos = ft_split(str, ' ', &length);
 		infos = rt->parse_infos;
-		if (length != 3|| ft_strncmp(infos[0], "A", 2))
+		if (length != 3 || ft_strncmp(infos[0], "A", 2))
 			terminate("incorrect scene file ambient\n", rt);
 		ambient = ft_calloc(1, sizeof(t_tuple));
 		rt->scene.ambient = ambient;
 		if (!ambient)
 			terminate(ERR_MALLOC, rt);
-		*ambient = tu_scale(tu_parse(infos[2], 2, rt), 
+		*ambient = tu_scale(tu_parse(infos[2], 2, rt),
 				check_ratio(ft_atod(infos[1], rt, 0), 0, rt));
 		free_double(rt->parse_infos);
 		rt->parse_infos = NULL;
 	}
 	else
-		terminate("Incorrect scene file",rt);
+		terminate("Incorrect scene file", rt);
 	printf("ambient\n");
 }
 
 //could be optimized easily by removing the if conditions
-t_color light_calc(t_vector lightv, t_compute cmp, t_color ef_color, t_light l)
+t_color	light_calc(t_vector lightv, t_compute cmp, t_color ef_color, t_light l)
 {
 	t_color	diffuse;
 	t_color	specular;
@@ -78,8 +78,8 @@ t_color light_calc(t_vector lightv, t_compute cmp, t_color ef_color, t_light l)
 	else
 	{
 		diffuse = tu_scale(ef_color, cmp.obj->material.diffuse * li_dot_nor);
-		re_dot_eye = tu_dot(ve_reflection(tu_scale(lightv, -1),
-				cmp.normalv), cmp.eyev);
+		re_dot_eye = tu_dot(ve_reflection(tu_scale(lightv, -1), 
+					cmp.normalv), cmp.eyev);
 		if (re_dot_eye <= 0)
 			specular = tu_create(0, 0, 0, COLOR);
 		else
@@ -94,10 +94,10 @@ t_color light_calc(t_vector lightv, t_compute cmp, t_color ef_color, t_light l)
 
 t_color	lighting(t_scene scene, t_compute cmp, t_light light, bool shade)
 {
-	t_color	ef_color;
+	t_color		ef_color;
 	t_vector	lightv;
-	t_color	ambient;
-	t_color	color;
+	t_color		ambient;
+	t_color		color;
 
 	color = cmp.obj->material.color;
 	if (cmp.obj->material.pattern.enable == true)
@@ -109,5 +109,3 @@ t_color	lighting(t_scene scene, t_compute cmp, t_light light, bool shade)
 	lightv = tu_normalize(tu_subtract(light.position, cmp.point));
 	return (tu_add(light_calc(lightv, cmp, ef_color, light), ambient));
 }
-
-

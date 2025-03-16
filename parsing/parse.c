@@ -65,7 +65,7 @@ void	fill_scene(t_mini *rt, char **elems)
 		else if (!ft_strncmp(elems[i], "", 2))
 			return ;
 		else
-			terminate("Scene file elements error 1",rt);
+			terminate("Scene file elements error 1", rt);
 	}
 }
 
@@ -81,7 +81,7 @@ void	create_scene(t_mini *rt)
 	obj = 0;
 	check_elems(rt, &obj, &light);
 	if (!light)
-		terminate("Scene file elements error 2",rt);
+		terminate("Scene file elements error 2", rt);
 	rt->scene.light = ft_calloc(light, sizeof(t_light *));
 	if (!rt->scene.light)
 		terminate(ERR_MALLOC, rt);
