@@ -1,32 +1,47 @@
-#include "../minirt.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   clean.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fbbot <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/16 13:10:26 by fbbot             #+#    #+#             */
+/*   Updated: 2025/03/16 15:24:05 by fbbot            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-void	ft_putstr_fd(char *s, int fd)
-{
-	if (fd >= 0 && s)
-		(void)!write(fd, s, ft_strlen(s));
-}
+#include "../minirt.h"
 
 void	ft_putendl_fd(char *s, int fd)
 {
-	if (fd >= 0)
+	char	*err;
+
+	err = "Error\n";
+	if (fd >= 0 && s)
 	{
-		ft_putstr_fd("Error\n", fd);
-		ft_putstr_fd(s, fd);
-		ft_putstr_fd("\n", fd);
+		(void)!write(fd, err, ft_strlen(err));
+		(void)!write(fd, s, ft_strlen(s));
+		(void)!write(fd, "\n", 2);
 	}
 }
 
-void	free_double(char **ptr)
+void	free_one(char *ptr)
+{
+	free(ptr);
+	ptr = NULL;
+}
+
+void	free_double(char ***ptr)
 {
 	int	i;
 
 	i = 0;
-	if (!ptr)
+	if (!ptr || !*ptr)
 		return ;
-	while (ptr[i])
-		free(ptr[i++]);
-	free(ptr);
-	ptr = NULL;
+	while ((*ptr)[i])
+		free((*ptr)[i++]);
+	free(*ptr);
+	*ptr = NULL;
 }
 
 void	free_double_scene(t_mini *rt)
@@ -65,9 +80,9 @@ void	terminate(char *error, t_mini *rt)
 	if (rt->parse_str)
 		free(rt->parse_str);
 	if (rt->parse_elems)
-		free_double(rt->parse_elems);
+		free_double(&rt->parse_elems);
 	if (rt->parse_infos)
-		free_double(rt->parse_infos);
+		free_double(&rt->parse_infos);
 	if (rt->img)
 		mlx_destroy_image(rt->con, rt->img);
 	if (rt->win)

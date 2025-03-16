@@ -6,7 +6,7 @@
 /*   By: fbbot <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 15:00:55 by fbbot             #+#    #+#             */
-/*   Updated: 2025/02/23 15:55:54 by fbbot            ###   ########.fr       */
+/*   Updated: 2025/03/16 15:24:05 by fbbot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static	t_vector	find_non_parallel_ve(t_vector v);
 
-t_matrix view_transform(t_point from, t_vector orient)
+t_matrix	view_transform(t_point from, t_vector orient)
 {
 	t_vector	forward;
 	t_vector	left;
@@ -27,7 +27,7 @@ t_matrix view_transform(t_point from, t_vector orient)
 	left = tu_cross(forward, normalize_up);
 	left = tu_normalize(left);
 	real_up = tu_cross(left, forward);
-	orient_mat = ma_tu_fill(left, real_up, tu_negate(forward),
+	orient_mat = ma_tu_fill(left, real_up, tu_scale(forward, -1),
 			tu_create(0, 0, 0, POINT));
 	return (ma_multiply(orient_mat,
 			ma_translate(tu_create(-from.x, -from.y, -from.z, 0))));
@@ -71,15 +71,17 @@ void	ca_create(char *str, t_mini *rt)
 {
 	t_camera	*camera;
 	char		**infos;
-	int		length;
+	int			length;
 
 	printf("Camera\n");
 	if (!rt->scene.camera)
 	{
 		rt->parse_infos = ft_split(str, ' ', &length);
+		if (!rt->parse_infos)
+			terminate(ERR_MALLOC, rt);
 		infos = rt->parse_infos;
 		if (length != 4 || ft_strncmp(infos[0], "C", 2))
-			terminate("incorrect scene file camera\n", rt);
+			terminate("Incorrect Camera Line", rt);
 		camera = ft_calloc(1, sizeof(t_camera));
 		if (!camera)
 			terminate(ERR_MALLOC, rt);
@@ -88,9 +90,8 @@ void	ca_create(char *str, t_mini *rt)
 				check_ratio(ft_atod(infos[3], rt, 0), 1, rt));
 		camera->transform = view_transform(tu_parse(infos[1],
 					1, rt), tu_parse(infos[2], 0, rt));
-		free_double(rt->parse_infos);
-		rt->parse_infos = NULL;
+		free_double(&rt->parse_infos);
 	}
 	else
-		terminate("Incorrect scene file", rt);
+		terminate("Only One Camera Needed", rt);
 }

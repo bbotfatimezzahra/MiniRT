@@ -1,7 +1,6 @@
 #ifndef MINIRT_H
 # define MINIRT_H
 
-# include "mlx.h"
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -14,15 +13,15 @@
 # include <math.h>
 # include <stdlib.h>
 # include <float.h>
+# include "mlx.h"
 # include "./utils/Get_next_line/get_next_line.h"
 
-# define ERR_USAGE "Usage : ./minirt Map_file(file.rt)"
-# define ERR_MAP "Incorrect Map file"
+# define ERR_USAGE "Usage : ./minirt Scene_file.rt"
+# define ERR_SCENE "Incorrect Scene file"
 # define ERR_CON "Minirt initialization failure"
 # define ERR_WIN "Window initialization failure"
 # define ERR_IMG "Image initialization failure"
 # define ERR_MALLOC "Allocation failure"
-# define USR_INT "User interruption"
 
 # define BLACK 0x00000000
 # define GREEN 0x0000FF00
@@ -208,7 +207,6 @@ t_matrix rodrigues_formula(t_vector orient, t_vector ini_vector);
 
 //----------------------------tuple and matrix manipulation -------------------
 
-t_tuple   tu_negate(t_tuple t);
 t_tuple   tu_create(double x, double y, double z, int type);
 int       tu_compare(t_tuple t1, t_tuple t2);
 t_tuple   tu_scale(t_tuple t1, double a);
@@ -243,15 +241,15 @@ t_ray   ray_transform(t_ray ray, t_matrix matrix);
 //--------------------------ray-object intersection------------------------------
 
 t_intersections pl_intersect(t_ray r, t_object *pl);
-t_sphere        sp_transform(t_sphere sp, t_matrix matrix);
 t_intersections sp_intersect(t_object *sp, t_ray ray, t_intersections xs);
-t_intersections w_intersect(t_scene scene, t_ray ray);
 t_intersections cy_intersect(t_object *cy, t_ray ray, t_intersections xs);
 t_intersections co_intersect(t_object *co, t_ray ray, t_intersections xs);
+t_intersections w_intersect(t_scene scene, t_ray ray);
 t_intersect     hit(t_intersections inter);
 t_intersections intersect_world(t_scene s, t_ray r);
 
 //------------------------- compute lighting utils ------------------------------
+
 void	ve_co_normal(t_point obj_point, t_vector *wrd_n, t_vector obj_n, t_object obj);
 void      ve_cy_normal(t_point obj_point, t_vector *wrd_n, t_vector obj_n, t_object obj);
 t_vector  ve_reflection(t_point in, t_vector normal);
@@ -263,7 +261,7 @@ t_compute prepare(t_intersections xs, t_ray ray);
 t_color         shade_hit(t_scene, t_compute cmp, int reflect_recur_checker);
 bool            pixel_is_shadow(t_scene s, t_tuple above_point, int i);
 t_color color_at(t_scene s, t_ray r, int reflect_recur_checker);
-t_color reflect_color(t_compute cmp, t_scene s, int reflect_recur_checker);
+t_color	reflect_color(t_compute cmp, t_scene s, int reflect_recur_checker);
 unsigned long rgb_to_hex(t_color c);
 t_color	lighting(t_scene s, t_compute cmp, t_light light, bool shade);
 
@@ -303,6 +301,8 @@ t_tuple	tu_parse(char *str, int type, t_mini *rt);
 double	check_ratio(double value, int type, t_mini *rt);
 t_material	m_parse(t_mini *rt, t_material ma, int length, int i);
 
+void	free_one(char *ptr);
+void	free_double(char ***ptr);
 void	terminate(char *error, t_mini *rt);
 
 //-----------------------------libft functions-----------------------------------
@@ -310,7 +310,6 @@ void	terminate(char *error, t_mini *rt);
 int	ft_strncmp(const char *s1, const char *s2, size_t n);
 char	**ft_split(char const *s, char c, int *length);
 double	ft_atod(char *str, t_mini *rt, int vector);
-void	free_double(char **ptr);
 void	*ft_calloc(size_t count, size_t size);
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 int	ft_isdigit(int c);

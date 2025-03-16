@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tuples.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fbbot <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/16 12:59:44 by fbbot             #+#    #+#             */
+/*   Updated: 2025/03/16 15:52:08 by fbbot            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minirt.h"
 
 t_tuple	tu_create(double x, double y, double z, int w)
@@ -11,16 +23,16 @@ t_tuple	tu_create(double x, double y, double z, int w)
 	return (t);
 }
 
-int tu_compare(t_tuple t1, t_tuple t2)
+int	tu_compare(t_tuple t1, t_tuple t2)
 {
 	if (fabs(t1.x - t2.x) < EPS
-			&& fabs(t1.y - t2.y) < EPS
-			&& fabs(t1.z - t2.z) < EPS)
+		&& fabs(t1.y - t2.y) < EPS
+		&& fabs(t1.z - t2.z) < EPS)
 		return (1);
 	return (0);
 }
 
-t_tuple tu_scale(t_tuple t1, double a)
+t_tuple	tu_scale(t_tuple t1, double a)
 {
 	t_tuple	scaled;
 
@@ -60,13 +72,4 @@ t_tuple	tu_normalize(t_tuple t1)
 	norm.z = t1.z / magn;
 	norm.w = t1.w / magn;
 	return (norm);
-}
-
-//
-t_tuple tu_negate(t_tuple t)
-{
-	return (tu_create(-t.x,
-				-t.y,
-				-t.z,
-				-t.w));
 }

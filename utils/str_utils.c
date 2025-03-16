@@ -6,26 +6,11 @@
 /*   By: fbbot <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 13:45:43 by fbbot             #+#    #+#             */
-/*   Updated: 2024/06/26 18:27:08 by fbbot            ###   ########.fr       */
+/*   Updated: 2025/03/16 14:52:52 by fbbot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minirt.h"
-
-int	ft_isalpha(int c)
-{
-	if ((c < 'a' || c > 'z') && (c < 'A' || c > 'Z'))
-		return (0);
-	return (1);
-}
-
-int	ft_isdigit(int c)
-{
-	if ((c < '0' || c > '9') && c != '-')
-		return (0);
-	return (1);
-}
-
 
 void	ft_bzero(void *s, size_t n)
 {
@@ -49,6 +34,22 @@ void	*ft_calloc(size_t count, size_t size)
 		return (NULL);
 	ft_bzero(result, count * size);
 	return (result);
+}
+
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
+{
+	size_t			i;
+	unsigned char	*tmps1;
+	unsigned char	*tmps2;
+
+	i = 0;
+	if (!n)
+		return (0);
+	tmps1 = (unsigned char *)s1;
+	tmps2 = (unsigned char *)s2;
+	while (tmps1[i] && tmps2[i] && (i < n - 1) && (tmps1[i] == tmps2[i]))
+		i++;
+	return (tmps1[i] - tmps2[i]);
 }
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)

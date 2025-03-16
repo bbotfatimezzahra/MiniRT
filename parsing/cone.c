@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cone.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fbbot <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/16 12:47:19 by fbbot             #+#    #+#             */
+/*   Updated: 2025/03/16 15:24:05 by fbbot            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minirt.h"
 
 t_object	*co_create(t_mini *rt)
@@ -27,29 +39,30 @@ void	co_parse(char *str, t_mini *rt)
 {
 	t_object	*obj;
 	char		**infos;
-	int		length;
+	int			length;
 	double		a;
 
 	printf("Cone\n");
 	rt->parse_infos = ft_split(str, ' ', &length);
+	if (!rt->parse_infos)
+		terminate(ERR_MALLOC, rt);
 	infos = rt->parse_infos;
 	if (length < 6 || ft_strncmp(infos[0], "co", 3))
-		terminate("Incorrect scene file\n", rt);
+		terminate("Incorrect Cone Line", rt);
 	obj = co_create(rt);
 	rt->scene.objs[rt->scene.count++] = obj;
 	a = ft_atod(infos[3], rt, 0) / 2;
 	obj->transform = rodrigues_formula(tu_parse(infos[2], 0, rt),
 			tu_create(0, 1, 0, VECTOR));
 	obj->transform = ma_multiply(ma_scale(tu_create(a,
-				ft_atod(infos[4], rt, 0), a, 1)), obj->transform);
+					ft_atod(infos[4], rt, 0), a, 1)), obj->transform);
 	obj->transform = ma_multiply(ma_translate(tu_parse(infos[1], 1, rt)),
 			obj->transform);
 	obj->material = m_create(tu_parse(infos[5], 2, rt));
 	if (length > 6)
 		obj->material = m_parse(rt, obj->material, length, 6);
 	obj->id = rt->scene.count;
-	free_double(rt->parse_infos);
-	rt->parse_infos = NULL;
+	free_double(&rt->parse_infos);
 }
 
 t_intersections	check_caps(t_object *co, t_ray ray, t_intersections xs)
@@ -80,6 +93,7 @@ t_intersections	check_caps(t_object *co, t_ray ray, t_intersections xs)
 	}
 	return (xs);
 }
+
 //use the cylinder function
 static	void	co_util(t_intersections *xs, double c, t_ray ray, t_object *co)
 {
@@ -111,7 +125,7 @@ void	calc_factors(t_ray ray, double *a, double *b, double *c)
 	*b = aidx - aidy + aidz;
 	*c = pow(ray.origin.x, 2) - pow(ray.origin.y, 2) + pow(ray.origin.z, 2);
 }
-	
+
 t_intersections	co_intersect(t_object *co, t_ray ray, t_intersections xs)
 {
 	double	a;

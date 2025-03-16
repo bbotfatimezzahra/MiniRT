@@ -6,7 +6,7 @@
 /*   By: fbbot <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 14:55:54 by fbbot             #+#    #+#             */
-/*   Updated: 2025/02/23 19:20:49 by fbbot            ###   ########.fr       */
+/*   Updated: 2025/03/16 15:26:17 by fbbot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	check_elems(t_mini *rt, int *obj, int *light)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 	char	*c;
 
 	i = -1;
@@ -23,7 +23,7 @@ void	check_elems(t_mini *rt, int *obj, int *light)
 	{
 		c = rt->parse_elems[i];
 		if (!ft_isalpha(c[0]) && ft_strncmp(c, "", 2))
-			terminate("Incorrect scene file",rt);
+			terminate("Line Without Identifier", rt);
 		j = 0;
 		if (c[0] == 'L')
 			(*light)++;
@@ -34,9 +34,9 @@ void	check_elems(t_mini *rt, int *obj, int *light)
 		}
 		while (!c[++j])
 		{
-			if(!ft_isdigit(c[j]) && c[j] != 32 && c[j] != ',' 
-					&& c[j] != '.' && c[j] != '-')
-				terminate("Scene file check error", rt);
+			if (!ft_isdigit(c[j]) && c[j] != 32 && c[j] != ','
+				&& c[j] != '.' && c[j] != '-')
+				terminate("Unexpected Character", rt);
 		}
 	}
 }
@@ -65,7 +65,7 @@ void	fill_scene(t_mini *rt, char **elems)
 		else if (!ft_strncmp(elems[i], "", 2))
 			return ;
 		else
-			terminate("Scene file elements error 1", rt);
+			terminate("Unknown Element", rt);
 	}
 }
 
@@ -81,7 +81,7 @@ void	create_scene(t_mini *rt)
 	obj = 0;
 	check_elems(rt, &obj, &light);
 	if (!light)
-		terminate("Scene file elements error 2", rt);
+		terminate("Light Element Needed", rt);
 	rt->scene.light = ft_calloc(light, sizeof(t_light *));
 	if (!rt->scene.light)
 		terminate(ERR_MALLOC, rt);
@@ -89,12 +89,9 @@ void	create_scene(t_mini *rt)
 	if (!rt->scene.objs)
 		terminate(ERR_MALLOC, rt);
 	fill_scene(rt, rt->parse_elems);
-	if (!rt->scene.light || !rt->scene.ambient|| !rt->scene.camera)
-		terminate("Scene file elements error 2",rt);
-	free(rt->parse_str);
-	rt->parse_str = NULL;
-	free_double(rt->parse_elems);
-	rt->parse_elems = NULL;
+	if (!rt->scene.light || !rt->scene.ambient || !rt->scene.camera)
+		terminate("Mandatory Element Not Found", rt);
+	free_double(&rt->parse_elems);
 }
 
 void	parse_file(char *file, t_mini *rt)
@@ -110,7 +107,7 @@ void	parse_file(char *file, t_mini *rt)
 		terminate("Open failure", rt);
 	str = get_next_line(fd);
 	if (!str)
-		terminate("Empty scene file", rt);
+		terminate("Empty Scene File", rt);
 	while (str)
 	{
 		rt->parse_str = ft_strjoin(rt->parse_str, str);

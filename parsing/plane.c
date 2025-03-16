@@ -6,7 +6,7 @@
 /*   By: fbbot <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 15:02:45 by fbbot             #+#    #+#             */
-/*   Updated: 2025/02/23 15:55:57 by fbbot            ###   ########.fr       */
+/*   Updated: 2025/03/16 15:24:05 by fbbot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,16 @@ t_object	*pl_create(t_mini *rt)
 void	pl_parse(char *str, t_mini *rt)
 {
 	t_object	*obj;
-	char	**infos;
-	int	length;
+	char		**infos;
+	int			length;
 
 	printf("Plane\n");
 	rt->parse_infos = ft_split(str, ' ', &length);
+	if (!rt->parse_infos)
+		terminate(ERR_MALLOC, rt);
 	infos = rt->parse_infos;
 	if (length < 4 || ft_strncmp(infos[0], "pl", 3))
-		terminate("Incorrect scene file\n", rt);
+		terminate("Incorrect Plane Line", rt);
 	obj = pl_create(rt);
 	rt->scene.objs[rt->scene.count++] = obj;
 	obj->transform = rodrigues_formula(tu_normalize(tu_parse(infos[2], 0, rt)),
@@ -47,6 +49,5 @@ void	pl_parse(char *str, t_mini *rt)
 	if (length > 4)
 		obj->material = m_parse(rt, obj->material, length, 4);
 	obj->id = rt->scene.count;
-	free_double(rt->parse_infos);
-	rt->parse_infos = NULL;
+	free_double(&rt->parse_infos);
 }

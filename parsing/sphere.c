@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sphere.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fbbot <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/16 12:55:43 by fbbot             #+#    #+#             */
+/*   Updated: 2025/03/16 15:24:05 by fbbot            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minirt.h"
 
 t_object	*sp_create(t_mini *rt)
@@ -24,13 +36,15 @@ void	sp_parse(char *str, t_mini *rt)
 {
 	t_object	*obj;
 	char		**infos;
-	int		length;
+	int			length;
 	double		a;
 
 	rt->parse_infos = ft_split(str, ' ', &length);
+	if (!rt->parse_infos)
+		terminate(ERR_MALLOC, rt);
 	infos = rt->parse_infos;
 	if (length < 4 || ft_strncmp(infos[0], "sp", 3))
-		terminate("Incorrect scene file\n", rt);
+		terminate("Incorrect Sphere Line", rt);
 	obj = sp_create(rt);
 	rt->scene.objs[rt->scene.count++] = obj;
 	a = ft_atod(infos[2], rt, 0) / 2;
@@ -41,7 +55,6 @@ void	sp_parse(char *str, t_mini *rt)
 	if (length > 4)
 		obj->material = m_parse(rt, obj->material, length, 4);
 	obj->id = rt->scene.count;
-	free_double(rt->parse_infos);
-	rt->parse_infos = NULL;
+	free_double(&rt->parse_infos);
 	printf("Sphere\n");
 }

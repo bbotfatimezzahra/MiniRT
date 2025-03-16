@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   print.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fbbot <marvin@42.fr>                       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/16 13:20:03 by fbbot             #+#    #+#             */
+/*   Updated: 2025/03/16 13:21:02 by fbbot            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../minirt.h"
 
 void	print_tuple(t_tuple t)
@@ -8,7 +20,7 @@ void	print_tuple(t_tuple t)
 		printf("COLOR");
 	else if (t.w == POINT)
 		printf("POINT");
-	printf("(%.5f, %.5f, %.5f)\n",t.x, t.y, t.z);
+	printf("(%.5f, %.5f, %.5f)\n", t.x, t.y, t.z);
 }
 
 void	print_matrix(t_matrix m)
@@ -23,22 +35,15 @@ void	print_matrix(t_matrix m)
 		j = -1;
 		printf("|");
 		while (++j < m.cols)
-			printf(" %.5f |",m.v[i][j]);
+			printf(" %.5f |", m.v[i][j]);
 		printf("\n");
 	}
 }
 
-void	print_ray(t_ray r)
-{
-	printf("RAY (\nOg :");
-	print_tuple(r.origin);
-	printf("Dir :");
-	print_tuple(r.direction);
-}
-
 void	print_material(t_material ma)
 {
-	printf("	material : spec : %.1f refl : %.1f shine : %.1f pattern : ", ma.specular, ma.reflective, ma.shininess);
+	printf("	material : spec : %.1f refl : %.1f shine : %.1f pattern : ",
+		ma.specular, ma.reflective, ma.shininess);
 	if (ma.pattern.type == NONE)
 		printf("NONE ");
 	else if (ma.pattern.type == CHECKER)
@@ -51,6 +56,33 @@ void	print_material(t_material ma)
 		printf("GRADIENT ");
 	printf("color : ");
 	print_tuple(ma.color);
+}
+
+void	print_objects(t_mini rt)
+{
+	int	i;
+
+	i = -1;
+	while (++i < rt.scene.count)
+	{
+		printf("	id : %d\n", rt.scene.objs[i]->id);
+		printf("	type : ");
+		if (rt.scene.objs[i]->type == SPHERE)
+			printf("SPHERE\n");
+		else if (rt.scene.objs[i]->type == CYLINDER)
+			printf("CYLINDER\n");
+		else if (rt.scene.objs[i]->type == PLANE)
+			printf("PLANE\n");
+		else if (rt.scene.objs[i]->type == CONE)
+			printf("CONE\n");
+		else
+			printf("ELSE\n");
+		printf("	obj : %p\n", rt.scene.objs[i]->obj);
+		print_material(rt.scene.objs[i]->material);
+		printf("	transform : ");
+		print_matrix(rt.scene.objs[i]->transform);
+		printf("--------------------------\n");
+	}
 }
 
 void	print_scene(t_mini rt)
@@ -69,7 +101,7 @@ void	print_scene(t_mini rt)
 	i = -1;
 	while (++i < rt.scene.numlight)
 	{
-		printf("	num : %d\n	position :",i);
+		printf("	num : %d\n	position :", i);
 		print_tuple(rt.scene.light[i]->position);
 		printf("	intensity :");
 		print_tuple(rt.scene.light[i]->intensity);
@@ -77,26 +109,6 @@ void	print_scene(t_mini rt)
 	}
 	printf("======================================\n");
 	printf("=Objects := count %d \n", rt.scene.count);
-	i = -1;
-	while (++i < rt.scene.count)
-	{
-		printf("	id : %d\n",rt.scene.objs[i]->id);
-		printf("	type : ");
-		if (rt.scene.objs[i]->type == SPHERE)
-			printf("SPHERE\n");
-		else if (rt.scene.objs[i]->type == CYLINDER)
-			printf("CYLINDER\n");
-		else if (rt.scene.objs[i]->type == PLANE)
-			printf("PLANE\n");
-		else if (rt.scene.objs[i]->type == CONE)
-			printf("CONE\n");
-		else
-			printf("ELSE\n");
-		printf("	obj : %p\n", rt.scene.objs[i]->obj);
-		print_material(rt.scene.objs[i]->material);
-		printf("	transform : ");
-		print_matrix(rt.scene.objs[i]->transform);
-		printf("--------------------------\n");
-	}
+	print_objects(rt);
 	printf("**************************************************\n");
 }

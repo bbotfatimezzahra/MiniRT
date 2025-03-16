@@ -6,7 +6,7 @@
 /*   By: fbbot <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/12 18:53:30 by fbbot             #+#    #+#             */
-/*   Updated: 2025/02/23 18:07:47 by fbbot            ###   ########.fr       */
+/*   Updated: 2025/03/16 12:57:10 by fbbot            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ size_t	ft_strlen(char *s)
 char	*ft_strchr(char *s, int c, int d)
 {
 	size_t	i;
-	int	j;
+	int		j;
 	size_t	length;
 
 	length = ft_strlen(s);

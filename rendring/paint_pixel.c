@@ -7,12 +7,12 @@ t_compute prepare(t_intersections xs, t_ray ray)
   new.xs = hit(xs);
   new.obj = new.xs.object;
   new.point = ray_position(ray, hit(xs).t);
-  new.eyev = tu_negate(ray.direction);
+  new.eyev = tu_scale(ray.direction, -1);
   new.normalv = ve_normal_at(new.xs.object, new.point);
   new.inside = false;
   if (tu_dot(new.normalv, new.eyev) < 0)
   {
-    new.normalv = tu_negate(new.normalv);
+    new.normalv = tu_scale(new.normalv, -1);
     new.inside = true;
   }
   new.reflectv = tu_normalize(ve_reflection(ray.direction, new.normalv));
