@@ -6,7 +6,7 @@
 /*   By: fbbot <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 13:11:06 by fbbot             #+#    #+#             */
-/*   Updated: 2025/03/17 12:48:46 by misslunet        ###   ########.fr       */
+/*   Updated: 2025/03/17 15:09:16 by snidbell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ double	ft_atod(char *str, t_mini *rt, int a)
 	{
 		result = (result * 10) + (str[i++] - '0');
 		if (((result > INT_MAX) && sign == 1)
-			|| ((result * -1 > INT_MIN) && sign == -1))
+			|| ((result * -1 < INT_MIN) && sign == -1))
 			terminate("Out Of Range Double Value", rt);
 	}
 	return (float_point(result * sign, &str[i], rt));

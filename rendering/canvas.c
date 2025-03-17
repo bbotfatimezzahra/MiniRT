@@ -6,7 +6,7 @@
 /*   By: snidbell <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 02:48:58 by snidbell          #+#    #+#             */
-/*   Updated: 2025/03/16 15:32:50 by snidbell         ###   ########.fr       */
+/*   Updated: 2025/03/17 15:14:54 by snidbell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	start_display(t_mini *rt)
 
 	l_length = &rt->line_length;
 	endian = &rt->endian;
-	title = "RAYTRACER PROJECT ***FBBOT***";
+	title = "DJAMEEL";
 	rt->con = mlx_init();
 	if (!rt->con)
 		terminate(ERR_CON, rt);
