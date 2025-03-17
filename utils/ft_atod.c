@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   atod.c                                             :+:      :+:    :+:   */
+/*   ft_atod.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fbbot <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/16 13:11:06 by fbbot             #+#    #+#             */
-/*   Updated: 2025/03/16 15:03:33 by fbbot            ###   ########.fr       */
+/*   Updated: 2025/03/17 12:48:46 by misslunet        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,8 @@ double	float_point(double num, char *str, t_mini *rt)
 	while (str[i] && (str[i] >= '0' && str[i] <= '9'))
 	{
 		result = (result * 10) + (str[i] - '0');
-		if ((result >= 0 && (result + num > DBL_MAX))
-			|| (result < 0 && (result + num < DBL_MIN)))
-			terminate("Out Of Range Double Value 2", rt);
+		if (result > INT_MAX)
+			terminate("Out Of Range Double Value", rt);
 		i++;
 	}
 	result = result * pow(10, -(i - 1));
@@ -91,9 +90,9 @@ double	ft_atod(char *str, t_mini *rt, int a)
 	while (str[i] && (str[i] >= '0' && str[i] <= '9'))
 	{
 		result = (result * 10) + (str[i++] - '0');
-		if (((result > DBL_MAX) && sign == 1)
-			|| ((result * -1 > DBL_MIN) && sign == -1))
-			terminate("Out Of Range Double Value 1", rt);
+		if (((result > INT_MAX) && sign == 1)
+			|| ((result * -1 > INT_MIN) && sign == -1))
+			terminate("Out Of Range Double Value", rt);
 	}
 	return (float_point(result * sign, &str[i], rt));
 }
